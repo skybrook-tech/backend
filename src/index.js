@@ -32,13 +32,6 @@ app.use(cors());
 //   })
 // );
 
-// const io = require("socket.io")(server);
-// const { db } = require("db-models");
-// const middleware = require("middleware-rest");
-// const ERROR_CODES = require("constants/error-codes");
-// const { ApolloServer } = require("apollo-server-express");
-// const { typeDefs, resolvers } = require("./src/graphql/schema/private");
-// const schemaRoutes = require("./src/utils/rest-generator");
 const PORT = process.env.PORT;
 
 server.listen(PORT, () => {
