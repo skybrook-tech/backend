@@ -2,7 +2,7 @@
   "name": "mockend",
   "version": "0.0.1",
   "description": "An app for mocking backends",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "node index.js",
     "deploy": "git push && git push heroku master",
