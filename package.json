@@ -9,7 +9,6 @@
     "test": "jest --coverage",
     "sql": "node_modules/.bin/sequelize",
     "migrate-db": "node_modules/.bin/sequelize db:migrate && yarn",
-    "postinstall": "link-module-alias",
     "prod-logs": "heroku logs --tail"
   },
   "keywords": [
@@ -35,6 +34,8 @@
   },
   "devDependencies": {
     "jest": "^24.9.0",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.3"
   }
 }
