@@ -1,10 +1,13 @@
-const cors = require("cors");
-const express = require("express");
-const app = express();
-const server = require("http").Server(app);
-const vhost = require("vhost");
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+// import vhost from "vhost";
+// const vhost = require("vhost");
 
-require("dotenv").config();
+const app = express();
+// const server = require("http").Server(app);
+
+dotenv.config();
 
 app.use(express.json());
 
@@ -34,7 +37,8 @@ app.use(cors());
 
 const PORT = process.env.PORT;
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
+  // tslint:disable-next-line:no-console
   console.log(`🚀 Server ready at http://mockend.lvh.me:${PORT}`);
 });
 
