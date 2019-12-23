@@ -19,5 +19,5 @@ module.exports = {
     sourceType: "module"
   },
   plugins: ["@typescript-eslint"],
-  rules: { "arrow-parens": "ignore" }
+  rules: { "arrow-parens": "ignore", "comma-dangle": ["error", "never"] }
 };
