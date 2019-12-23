@@ -1,46 +1,76 @@
-import express, { Request, Response, Router } from "express";
-import { CreateControllerConfig } from "./create-controller.types";
+import * as express from "express";
 
-const defaultResponse = (req: Request, res: Response): void => {
+import {
+  CreateControllerConfig,
+  CreateControllerResult
+} from "./create-controller.types";
+
+const defaultResponse = (
+  req: express.Request,
+  res: express.Response
+): void => {
   res.status(200).json(res.response);
 };
 
-const createController = (config: CreateControllerConfig): Router => {
-  const { model, middleware, nestedControllers = [] } = config;
+const createController = (
+  config: CreateControllerConfig
+): CreateControllerResult => {
+  const {
+    model,
+    path,
+    middleware,
+    nestedControllers = []
+  } = config;
 
   const router = express.Router({ mergeParams: true });
 
-  const BASE_ROUTE = "/";
+  const BASE_ROUTE = `/`;
   const BASE_ROUTE_ID = "/:id\n";
 
-  if (middleware.create) {
-    router.post(BASE_ROUTE, middleware.create, defaultResponse);
+  const {
+    create,
+    getOne,
+    getAll,
+    update,
+    destroy
+  } = middleware;
+
+  if (create) {
+    router.post(BASE_ROUTE, create, defaultResponse);
   }
 
-  if (middleware.getOne) {
-    router.get(BASE_ROUTE, middleware.getOne, defaultResponse);
+  if (getOne) {
+    router.get(BASE_ROUTE_ID, getOne, defaultResponse);
   }
 
-  if (middleware.getAll) {
-    router.get(BASE_ROUTE_ID, middleware.getAll, defaultResponse);
+  if (getAll) {
+    router.get(BASE_ROUTE, getAll, defaultResponse);
   }
 
-  if (middleware.update) {
-    router.patch(BASE_ROUTE_ID, middleware.update, defaultResponse);
+  if (update) {
+    router.patch(BASE_ROUTE_ID, update, defaultResponse);
   }
 
-  if (middleware.destroy) {
-    router.delete(BASE_ROUTE_ID, middleware.destroy, defaultResponse);
+  if (destroy) {
+    router.delete(BASE_ROUTE_ID, destroy, defaultResponse);
   }
 
   nestedControllers.forEach((nestedController) => {
-    const { path } = nestedController;
-    const pathWithParentParams = `/:${model}Id/${path || model}`;
+    const {
+      path: nestedPath,
+      model: nestedModel
+    } = nestedController.config;
 
-    router.use(pathWithParentParams, createController(nestedController));
+    const pathWithParentParams = `/:${model}Id/${nestedPath ||
+      nestedModel}`;
+
+    router.use(
+      pathWithParentParams,
+      nestedController.router
+    );
   });
 
-  return router;
+  return { router, config };
 };
 
 export default createController;

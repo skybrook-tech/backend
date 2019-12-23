@@ -1,18 +1,27 @@
-import { NextFunction, Request, Response } from "express";
+import * as express from "express";
 
-type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void;
+export type MiddlewareFunction = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => void;
 
 interface CreateControllerMiddleware {
-  create: MiddlewareFunction[];
-  getOne: MiddlewareFunction[];
-  getAll: MiddlewareFunction[];
-  update: MiddlewareFunction[];
-  destroy: MiddlewareFunction[];
+  create?: MiddlewareFunction[];
+  destroy?: MiddlewareFunction[];
+  getAll?: MiddlewareFunction[];
+  getOne?: MiddlewareFunction[];
+  update?: MiddlewareFunction[];
+}
+
+export interface CreateControllerResult {
+  config: CreateControllerConfig;
+  router?: express.Router;
 }
 
 export interface CreateControllerConfig {
   model: string;
-  path: string;
   middleware: CreateControllerMiddleware;
-  nestedControllers: CreateControllerConfig[];
+  path?: string;
+  nestedControllers?: CreateControllerResult[];
 }
