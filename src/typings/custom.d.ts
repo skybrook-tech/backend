@@ -1,5 +1,7 @@
+import { Request } from "express";
+
 declare namespace Express {
   export interface Response {
-    response?: any;
+    locals: any;
   }
 }

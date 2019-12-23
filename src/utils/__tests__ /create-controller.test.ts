@@ -1,4 +1,3 @@
-// import app from "../../server";
 import express from "express";
 import { MiddlewareFunction } from "../create-controller.types";
 
@@ -8,7 +7,7 @@ import createController from "../create-controller";
 const app = express();
 
 const createResponseMiddleware = (response: any): MiddlewareFunction => (req, res, next) => {
-  res.response = response;
+  res.locals.response = response;
   next();
 };
 

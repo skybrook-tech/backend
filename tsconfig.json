@@ -14,6 +14,6 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["**/*.test.ts", "**/__tests__"],
-  "files": ["src/typings/express.d.ts"]
+  "exclude": ["**/*.test.ts", "**/__tests__", "_config/**"],
+  "files": ["./src/typings/custom.d.ts"]
 }

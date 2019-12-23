@@ -1,10 +1,7 @@
 import * as express from "express";
+import defaultResponse from "../middleware/defaults/response";
 
 import { CreateControllerConfig, CreateControllerResult } from "./create-controller.types";
-
-const defaultResponse = (req: express.Request, res: express.Response): void => {
-  res.status(200).json(res.response);
-};
 
 const createController = (config: CreateControllerConfig): CreateControllerResult => {
   const { model, path, middleware, nestedControllers = [] } = config;
