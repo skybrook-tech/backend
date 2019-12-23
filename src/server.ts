@@ -1,17 +1,21 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import lodash from "lodash";
+import _config from "../_config";
+import routes from "./routes";
 // import vhost from "vhost";
 // const vhost = require("vhost");
 
 const app = express();
-// const server = require("http").Server(app);
 
 dotenv.config();
 
 app.use(express.json());
 
 app.use(cors());
+
+app.use(routes);
 
 // app.use(
 //   vhost(`*.${config.domain[app.settings.env]}`, async (req, res, next) => {
@@ -35,14 +39,13 @@ app.use(cors());
 //   })
 // );
 
-const PORT =
-  process.env.NODE_ENV === "test" ? 3071 : process.env.PORT;
+const PORT = process.env.NODE_ENV === "test" ? 3071 : process.env.PORT;
+
+const DOMAIN = lodash.get(_config, `domain.${process.env.NODE_ENV}`);
 
 app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
-  console.log(
-    `🚀 Server ready at http://mockend.lvh.me:${PORT}`
-  );
+  console.log(`Server ready at http://${DOMAIN}:${PORT}`);
 });
 
 export default app;
