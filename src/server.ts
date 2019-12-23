@@ -35,11 +35,14 @@ app.use(cors());
 //   })
 // );
 
-const PORT = process.env.PORT;
+const PORT =
+  process.env.NODE_ENV === "test" ? 3071 : process.env.PORT;
 
 app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
-  console.log(`🚀 Server ready at http://mockend.lvh.me:${PORT}`);
+  console.log(
+    `🚀 Server ready at http://mockend.lvh.me:${PORT}`
+  );
 });
 
-module.exports = app;
+export default app;
