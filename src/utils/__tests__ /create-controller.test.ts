@@ -7,9 +7,7 @@ import createController from "../create-controller";
 
 const app = express();
 
-const createResponseMiddleware = (
-  response: any
-): MiddlewareFunction => (req, res, next) => {
+const createResponseMiddleware = (response: any): MiddlewareFunction => (req, res, next) => {
   res.response = response;
   next();
 };
@@ -80,8 +78,7 @@ describe("createController normal and nested", () => {
     {
       path: "/test_model/122/test_model_nested/122",
       expected: "getOne nested",
-      description:
-        "GET /test_model/122/test_model_nested/122",
+      description: "GET /test_model/122/test_model_nested/122",
       method: request(app).get
     },
     {
@@ -93,15 +90,13 @@ describe("createController normal and nested", () => {
     {
       path: "/test_model/122/test_model_nested/122",
       expected: "destroy nested",
-      description:
-        "DELETE /test_model/122/test_model_nested/122",
+      description: "DELETE /test_model/122/test_model_nested/122",
       method: request(app).delete
     },
     {
       path: "/test_model/122/test_model_nested/122",
       expected: "update nested",
-      description:
-        "PATCH /test_model/122/test_model_nested/122",
+      description: "PATCH /test_model/122/test_model_nested/122",
       method: request(app).patch
     }
   ].forEach(({ path, expected, description, method }) => {
