@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "target": "es6",
     "noImplicitAny": true,
+    "allowJs": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
@@ -12,5 +13,7 @@
       "*": ["node_modules/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["**/*.test.ts", "**/__tests__"],
+  "files": ["src/typings/express.d.ts"]
 }
