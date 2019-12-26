@@ -18,6 +18,7 @@ modelNameCaps="${modelName^}"
 
 
 migrationFields=''
+modelFields=''
 typeDefs=''
 
 for column in "${@:3}"
@@ -29,7 +30,8 @@ do
 
     if [ ${sequelize[$colType]+abc}  ]
     then
-      migrationFields+="${colName}:{type:DataTypes.${sequelize[$colType]}},"
+      migrationFields+="${colName}:{type:sequelize.${sequelize[$colType]}},"
+      modelFields+="${colName}:{type:DataTypes.${sequelize[$colType]}},"
       typeDefs+="${colName}:${types[$colType]};"
     else 
       echo -e "\033[31mERROR:\e[0m" Datatype "'${colSplit[1]}'" does not exist. 1>&2
@@ -44,7 +46,7 @@ then
     mkdir $modelDir
     generate_table_migration $MIGRATIONS_DIR $migrationName $modelNameCaps $migrationFields
     generate_model_types $modelDir $modelNameCaps $typeDefs
-    generate_model_file $modelDir $modelNameCaps $migrationFields
+    generate_model_file $modelDir $modelNameCaps $modelFields
   else
     echo -e "\033[31mERROR:\e[0m" Model "'${modelName}'" already exists. 1>&2
     exit 1

@@ -19,16 +19,16 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        type: sequelize.INTEGER
       },
       $migrationFields
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: sequelize.DATE
       }
     });
   },
