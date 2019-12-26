@@ -4,7 +4,7 @@
   "description": "An app for mocking backends",
   "main": "dist/server.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "prebuild": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
     "prestart": "yarn build",
     "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
