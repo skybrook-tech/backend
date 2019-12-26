@@ -6,20 +6,20 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        type: sequelize.INTEGER
       },
-      firstName: { type: DataTypes.STRING },
-      lastName: { type: DataTypes.STRING },
-      username: { type: DataTypes.STRING },
-      email: { type: DataTypes.STRING },
-      password: { type: DataTypes.STRING },
+      firstName: { type: sequelize.STRING },
+      lastName: { type: sequelize.STRING },
+      username: { type: sequelize.STRING },
+      email: { type: sequelize.STRING },
+      password: { type: sequelize.STRING },
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: sequelize.DATE
       }
     });
   },
