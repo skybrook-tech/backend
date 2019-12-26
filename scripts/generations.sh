@@ -9,6 +9,7 @@ source  "${BASE_DIR}/scripts/func_generate-table-migration.sh"
 source  "${BASE_DIR}/scripts/func_generate-empty-migration.sh"
 source  "${BASE_DIR}/scripts/func_generate-model-file.sh"
 source  "${BASE_DIR}/scripts/func_generate-model-types.sh"
+source  "${BASE_DIR}/scripts/func_generate-db-type.sh"
 
 generationType=$1
 migrationName=${2,,}
@@ -40,6 +41,7 @@ do
 done
 
 
+
 if [ $generationType == model ]
 then
   if [ ! -d "$modelDir" ]; then
@@ -47,6 +49,7 @@ then
     generate_table_migration $MIGRATIONS_DIR $migrationName $modelNameCaps $migrationFields
     generate_model_types $modelDir $modelNameCaps $typeDefs
     generate_model_file $modelDir $modelNameCaps $modelFields
+    generate_db_type $MODEL_DIR
   else
     echo -e "\033[31mERROR:\e[0m" Model "'${modelName}'" already exists. 1>&2
     exit 1
