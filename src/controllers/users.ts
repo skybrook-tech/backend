@@ -14,12 +14,10 @@ router.post(
 
 router.post(
   "/login",
-
-  // middleware.authentication.login,
-  // middleware.authentication.signJwtForUser,
-  // middleware.sendResponse.successJson,
+  middleware.users.validations.login,
+  middleware.authentication.login,
+  middleware.authentication.signJwtForUser,
   defaultResponse
-  // middleware.defaults.response
 );
 
 export default router;
