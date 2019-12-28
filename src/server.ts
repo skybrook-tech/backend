@@ -1,23 +1,11 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
 import lodash from "lodash";
 import _config from "../_config";
 import routes from "./routes";
-import middleware from "./middleware";
+import setupServerDefaults from "./utils/setup-server-defaults";
 // import vhost from "vhost";
 // const vhost = require("vhost");
 
-const app = express();
-
-dotenv.config();
-
-app.use(express.json());
-
-app.use(cors());
-app.use(middleware.authentication.initializePassport);
-
-app.use(routes);
+const app = setupServerDefaults({ routes });
 
 // app.use(
 //   vhost(`*.${config.domain[app.settings.env]}`, async (req, res, next) => {
@@ -44,8 +32,6 @@ app.use(routes);
 const PORT = process.env.NODE_ENV === "test" ? 3071 : process.env.PORT;
 
 const DOMAIN = lodash.get(_config, `domain.${process.env.NODE_ENV}`);
-
-app.use(middleware.errorHandler);
 
 app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
