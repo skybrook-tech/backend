@@ -14,7 +14,8 @@
     "eslint": "node_modules/.bin/eslint",
     "migrate-db": "node_modules/.bin/sequelize db:migrate",
     "prod-logs": "heroku logs --tail",
-    "g": "./scripts/generations.sh"
+    "g": "./scripts/generations.sh",
+    "cov-report": "open ./coverage/lcov-report/index.html"
   },
   "keywords": [
     "mock",
