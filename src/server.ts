@@ -4,7 +4,7 @@ import express from "express";
 import lodash from "lodash";
 import _config from "../_config";
 import routes from "./routes";
-import authentication from "./middleware/authentication";
+import middleware from "./middleware";
 // import vhost from "vhost";
 // const vhost = require("vhost");
 
@@ -15,7 +15,7 @@ dotenv.config();
 app.use(express.json());
 
 app.use(cors());
-app.use(authentication.initializePassport);
+app.use(middleware.authentication.initializePassport);
 
 app.use(routes);
 
@@ -44,6 +44,8 @@ app.use(routes);
 const PORT = process.env.NODE_ENV === "test" ? 3071 : process.env.PORT;
 
 const DOMAIN = lodash.get(_config, `domain.${process.env.NODE_ENV}`);
+
+app.use(middleware.errorHandler);
 
 app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
