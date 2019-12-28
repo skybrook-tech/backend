@@ -7,7 +7,7 @@ const router = express.Router();
 router.post(
   "/register",
 
-  // middleware.users.validations.registration,
+  middleware.users.validations.registration,
   // middleware.authentication.register,
   // middleware.authentication.signJwtForUser,
 

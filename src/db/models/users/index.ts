@@ -1,5 +1,6 @@
 "use strict";
 import { DataTypes, Model, Sequelize } from "sequelize";
+import passportLocalSequelize from "passport-local-sequelize";
 import { UsersModelStatic } from "./types";
 
 module.exports = (sequelize: Sequelize) => {
@@ -27,9 +28,19 @@ module.exports = (sequelize: Sequelize) => {
       }
     },
     {}
-  ) as UsersModelStatic & { associate: (models: Model) => void };
+  ) as UsersModelStatic & {
+    associate: (models: Model) => void;
+    createStrategy?: () => void;
+    serializeUser?: () => void;
+    deserializeUser?: () => void;
+  };
 
-  Users.associate = (models) => {
+  passportLocalSequelize.attachToUser(Users, {
+    usernameField: "email",
+    hash: "password"
+  });
+
+  Users.associate = models => {
     // associations go here
   };
 
