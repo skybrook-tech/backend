@@ -1,4 +1,5 @@
-const execSync = require("child_process").execSync;
+import childProcess from "child_process";
+const execSync = childProcess.execSync;
 
 const createDb = () => {
   return new Promise((resolve, reject) => {
