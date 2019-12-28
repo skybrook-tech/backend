@@ -7,6 +7,7 @@ interface ErrorObject {
 }
 
 const errorHandler = (error: ErrorObject, req: Request, res: Response, next: NextFunction) => {
+  res.set("Content-Type", "application/json");
   res.status(error.status).json({ error });
 };
 
