@@ -4,6 +4,7 @@ import express from "express";
 import lodash from "lodash";
 import _config from "../_config";
 import routes from "./routes";
+import authentication from "./middleware/authentication";
 // import vhost from "vhost";
 // const vhost = require("vhost");
 
@@ -14,6 +15,7 @@ dotenv.config();
 app.use(express.json());
 
 app.use(cors());
+app.use(authentication.initializePassport);
 
 app.use(routes);
 

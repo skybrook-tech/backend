@@ -1,5 +1,6 @@
+import authentication from "./authentication";
 import defaults from "./defaults/response";
 
-const middleware = { defaults };
+const middleware = { authentication, defaults };
 
 export default middleware;
