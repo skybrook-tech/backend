@@ -8,10 +8,8 @@ router.post(
   "/register",
   middleware.users.validations.registration,
   middleware.authentication.register,
-  // middleware.authentication.signJwtForUser,
-
+  middleware.authentication.signJwtForUser,
   defaultResponse
-  // middleware.defaults.response
 );
 
 router.post(
