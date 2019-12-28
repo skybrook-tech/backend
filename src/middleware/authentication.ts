@@ -5,6 +5,7 @@ import passport from "passport";
 import * as Sequelize from "express";
 import passportJWT from "passport-jwt";
 import db from "../db/models";
+import errors from "../errors";
 
 interface JwtPayload {
   id: number;
@@ -95,10 +96,37 @@ const register = async (
   }
 };
 
+const login = async (
+  req: Sequelize.Request,
+  res: Sequelize.Response,
+  next: Sequelize.NextFunction
+) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await db.Users.findOne({ where: { email } });
+
+    const passwordMatchs = await bcrypt.compare(password, user.password);
+
+    if (passwordMatchs) {
+      res.locals.currentUser = user;
+
+      next();
+    }
+
+    if (!passwordMatchs) {
+      return next(errors.authentication.AUTH_USER_WRONG_PW);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 const authenticationMiddlewares = {
   register,
   initializePassport: passport.initialize(),
-  signJwtForUser
+  signJwtForUser,
+  login
 };
 
 export default authenticationMiddlewares;
