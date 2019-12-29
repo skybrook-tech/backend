@@ -122,6 +122,19 @@ const login = async (
   }
 };
 
+const jwtErrorSwitch = (message: string) => {
+  switch (message) {
+    case "No auth token":
+      return errors.authentication.AUTH_NO_TOKEN;
+
+    case "invalid token":
+      return errors.authentication.AUTH_INVALID_TOKEN;
+
+    default:
+      return { message, status: 401, code: "N/A" };
+  }
+};
+
 const requireJwt = (
   req: Sequelize.Request,
   res: Sequelize.Response,
@@ -130,13 +143,11 @@ const requireJwt = (
   passport.authenticate("jwt", { session: false }, (err, user, failuresOrInfo) => {
     if (failuresOrInfo) {
       const message = failuresOrInfo.message;
-      let error = { message, status: 401, code: "N/A" };
-
-      if (message === "No auth token") error = errors.authentication.AUTH_NO_TOKEN;
-      if (message === "invalid token") error = errors.authentication.AUTH_INVALID_TOKEN;
+      const error = jwtErrorSwitch(message);
 
       return next(error);
     }
+
     if (!user) {
       res.locals.currentUser = null;
       return next();
