@@ -7,18 +7,18 @@ const registration = async (req: Request, res: Response, next: NextFunction) => 
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return next(errors.authentication.AUTH_NO_P_OR_U);
+      next(errors.authentication.AUTH_NO_P_OR_U);
     }
 
     const user = await db.Users.findOne({ where: { email } });
 
     if (user) {
-      return next(errors.authentication.AUTH_USER_EXISTS);
+      next(errors.authentication.AUTH_USER_EXISTS);
     }
 
     next();
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
@@ -27,18 +27,18 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return next(errors.authentication.AUTH_NO_P_OR_U);
+      next(errors.authentication.AUTH_NO_P_OR_U);
     }
 
     const user = await db.Users.findOne({ where: { email } });
 
     if (!user) {
-      return next(errors.authentication.AUTH_USER_NOT_FOUND);
+      next(errors.authentication.AUTH_USER_NOT_FOUND);
     }
 
     next();
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
