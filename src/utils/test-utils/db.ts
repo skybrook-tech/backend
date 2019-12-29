@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import childProcess from "child_process";
 const execSync = childProcess.execSync;
 
