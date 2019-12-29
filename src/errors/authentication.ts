@@ -5,6 +5,8 @@ interface AuthErrorTypes {
   AUTH_USER_EXISTS: ErrorResponse;
   AUTH_USER_NOT_FOUND: ErrorResponse;
   AUTH_USER_WRONG_PW: ErrorResponse;
+  AUTH_NO_TOKEN: ErrorResponse;
+  AUTH_INVALID_TOKEN: ErrorResponse;
 }
 
 const authErrors = {
@@ -27,6 +29,16 @@ const authErrors = {
     message: "The password you have provided is incorrect.",
     status: 401,
     code: "AUTH_USER_WRONG_PW"
+  },
+  AUTH_NO_TOKEN: {
+    message: "No Auth token.",
+    status: 401,
+    code: "AUTH_NO_TOKEN"
+  },
+  AUTH_INVALID_TOKEN: {
+    message: "Invalid token.",
+    status: 401,
+    code: "AUTH_INVALID_TOKEN"
   }
 } as AuthErrorTypes;
 
