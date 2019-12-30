@@ -12,7 +12,7 @@ for d in $MODEL_DIR/*/ ; do
     modelName="${modelDir^}"
     modelType="${modelName}ModelStatic"
     modelTypes+="$modelName: ${modelType};"
-    modelImports+="import { ${modelType} } from './${modelDir}/types'";
+    modelImports+="import { ${modelType} } from './${modelDir}/types';";
 
 done
 
