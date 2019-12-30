@@ -5,7 +5,6 @@ import { ErrorResponse } from "../../errors/types";
 import db from "../../db/models";
 import controllers from "../index";
 import setupServerDefaults from "../../utils/setup-server-defaults";
-import dbUtils from "../../utils/test-utils/db";
 
 const router = express.Router();
 const app = setupServerDefaults({ routes: router.use("/users", controllers.users) });
@@ -19,8 +18,6 @@ const existingUser = { email: "existing@email.com", password: "password" } as Us
 const newUserAccount = { email: "new_user@email.com", password: "password" } as UserType;
 
 beforeAll(async () => {
-  await dbUtils.migrate();
-
   await request(app)
     .post("/users/register")
     .set("Accept", "application/json")

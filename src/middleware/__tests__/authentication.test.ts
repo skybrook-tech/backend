@@ -4,7 +4,6 @@ import errors from "../../errors";
 import db from "../../db/models";
 import controllers from "../../controllers/index";
 import setupServerDefaults from "../../utils/setup-server-defaults";
-import dbUtils from "../../utils/test-utils/db";
 import middleware from "../index";
 
 const router = express.Router();
@@ -25,8 +24,6 @@ interface UserType {
 const existingUser = { email: "existing@email.com", password: "password" } as UserType;
 
 beforeAll(async () => {
-  await dbUtils.migrate();
-
   await request(app)
     .post("/users/register")
     .set("Accept", "application/json")
