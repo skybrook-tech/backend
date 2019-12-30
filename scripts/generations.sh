@@ -16,8 +16,8 @@ source  "${BASE_DIR}/scripts/func_generate-controller.sh"
 generationType=$1
 migrationName=${2,,}
 modelName=$2
-modelDir="${MODEL_DIR}/${modelName,,}"
 modelNameCaps="${modelName^}"
+modelDir="${MODEL_DIR}/${modelNameCaps}"
 
 
 migrationFields=''
