@@ -9,6 +9,7 @@
     "prestart": "yarn build",
     "start": "ts-node-dev src/server.ts",
     "deploy": "git push && git push heroku master",
+    "pretest": "NODE_ENV=test node_modules/.bin/sequelize db:migrate",
     "test": "jest --runInBand --coverage",
     "sql": "node_modules/.bin/sequelize",
     "eslint": "node_modules/.bin/eslint",
