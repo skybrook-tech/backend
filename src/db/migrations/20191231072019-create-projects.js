@@ -9,6 +9,13 @@ module.exports = {
         type: sequelize.INTEGER
       },
       name: { type: sequelize.STRING, allowNull: false },
+      userId: {
+        type: sequelize.INTEGER,
+        references: { model: "Users", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        allowNull: false
+      },
       urlAffix: { type: sequelize.STRING, default: "" },
       uuid: { type: sequelize.STRING, allowNull: false },
       createdAt: {
