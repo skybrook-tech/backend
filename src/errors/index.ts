@@ -1,5 +1,6 @@
 import authentication from "./authentication";
+import crud from "./crud";
 
-const errors = { authentication };
+const errors = { authentication, crud };
 
 export default errors;
