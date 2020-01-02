@@ -7,7 +7,9 @@ interface ErrorObject {
 }
 
 const errorHandler = (error: ErrorObject, req: Request, res: Response, next: NextFunction) => {
-  console.error(error);
+  if (process.env.NODE_ENV !== "test") {
+    console.error(error);
+  }
   res.set("Content-Type", "application/json");
   res.status(error.status || 400).json({ error });
 };
