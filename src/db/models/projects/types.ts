@@ -5,6 +5,7 @@ export interface ProjectsModel extends Model {
   name: string;
   urlAffix: string;
   uuid: string;
+  userId: number;
   createdAt: Date;
   updatedAt: Date;
 }
