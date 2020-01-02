@@ -26,25 +26,17 @@ const jwtOptions = {
 };
 
 passport.use(
-  new passportJWT.Strategy(
-    jwtOptions,
-    async (req: any, jwtPayload: JwtPayload, next: Sequelize.NextFunction) => {
-      try {
-        const user = await db.Users.findOne({ where: { id: jwtPayload.id } });
+  new passportJWT.Strategy(jwtOptions, async (req: any, jwtPayload: JwtPayload, next: any) => {
+    try {
+      const user = await db.Users.findOne({ where: { id: jwtPayload.id } });
 
-        if (user) {
-          req.locals.currentUser = user;
-
-          next(null);
-        } else {
-          req.locals.currentUser = null;
-          next("foo");
-        }
-      } catch (error) {
-        next(error);
+      if (user) {
+        next(null, user);
       }
+    } catch (error) {
+      next(error);
     }
-  )
+  })
 );
 
 // @ts-ignore
@@ -150,7 +142,7 @@ const requireJwt = (
 
     if (!user) {
       res.locals.currentUser = null;
-      return next();
+      return next(errors.authentication.AUTH_USER_NOT_FOUND);
     }
 
     if (user) {
