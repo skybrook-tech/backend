@@ -9,7 +9,7 @@ interface ErrorObject {
 const errorHandler = (error: ErrorObject, req: Request, res: Response, next: NextFunction) => {
   console.error(error);
   res.set("Content-Type", "application/json");
-  res.status(error.status).json({ error });
+  res.status(error.status || 400).json({ error });
 };
 
 export default errorHandler;
