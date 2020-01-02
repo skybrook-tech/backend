@@ -9,7 +9,7 @@ const createController = (config: CreateControllerConfig): CreateControllerResul
   const router = express.Router({ mergeParams: true });
 
   const BASE_ROUTE = `/`;
-  const BASE_ROUTE_ID = "/:id\n";
+  const BASE_ROUTE_ID = "/:id";
 
   const { create, getOne, getAll, update, destroy } = middleware;
 
@@ -33,7 +33,7 @@ const createController = (config: CreateControllerConfig): CreateControllerResul
     router.delete(BASE_ROUTE_ID, destroy, defaultResponse);
   }
 
-  nestedControllers.forEach((nestedController) => {
+  nestedControllers.forEach(nestedController => {
     const { path: nestedPath, model: nestedModel } = nestedController.config;
 
     const pathWithParentParams = `/:${model}Id/${nestedPath || nestedModel}`;
