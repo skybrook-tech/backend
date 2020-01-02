@@ -12,6 +12,7 @@ source  "${BASE_DIR}/scripts/func_generate-model-file.sh"
 source  "${BASE_DIR}/scripts/func_generate-model-types.sh"
 source  "${BASE_DIR}/scripts/func_generate-db-type.sh"
 source  "${BASE_DIR}/scripts/func_generate-controller.sh"
+source  "${BASE_DIR}/scripts/func_generate-controllers-index.sh"
 
 generationType=$1
 migrationName=${2,,}
@@ -68,7 +69,8 @@ then
     generate_table_migration $MIGRATIONS_DIR $migrationName $modelNameCaps $migrationFields
     generate_model_types $modelDir $modelNameCaps $typeDefs
     generate_model_file $modelDir $modelNameCaps $modelFields
-    generate_model_controller $CONTROLLER_DIR $modelNameCaps
+    generate_model_controller $CONTROLLER_DIR $modelNameCaps $modelName
+    generate_controllers_index $CONTROLLER_DIR $modelNameCaps $modelName
     generate_db_type $MODEL_DIR
   else
     echo -e "\033[31mERROR:\e[0m" Model "'${modelName}'" already exists. 1>&2
@@ -77,16 +79,3 @@ then
 else
   exit 1
 fi
-
-
-
-
-
-# generate_table_migration
-# generate_model_file
-# generate_model_types
-
-
-
-
-

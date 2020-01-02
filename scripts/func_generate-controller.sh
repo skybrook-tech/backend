@@ -2,7 +2,7 @@ generate_model_controller() {
 
   
 
-fileName="${1}/${2}.ts"
+fileName="${1}/${3}.ts"
 
 
 echo ""
