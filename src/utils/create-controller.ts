@@ -1,7 +1,13 @@
 import * as express from "express";
 import defaultResponse from "../middleware/defaults/response";
+import pluralize from "pluralize";
 
 import { CreateControllerConfig, CreateControllerResult } from "./create-controller.types";
+
+const addParentId = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  res.locals.parent = { parentId: { ...req.params } };
+  next();
+};
 
 const createController = (config: CreateControllerConfig): CreateControllerResult => {
   const { model, path, middleware, nestedControllers = [] } = config;
@@ -36,9 +42,10 @@ const createController = (config: CreateControllerConfig): CreateControllerResul
   nestedControllers.forEach(nestedController => {
     const { path: nestedPath, model: nestedModel } = nestedController.config;
 
-    const pathWithParentParams = `/:${model}Id/${nestedPath || nestedModel}`;
+    const parentIdParam = pluralize.singular(model.toLowerCase());
+    const pathWithParentParams = `/:${parentIdParam}Id/${nestedPath || nestedModel}`;
 
-    router.use(pathWithParentParams, nestedController.router);
+    router.use(pathWithParentParams, addParentId, nestedController.router);
   });
 
   return { router, config };
