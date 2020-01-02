@@ -25,7 +25,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await db.Users.destroy({ where: {}, truncate: true });
+  await db.Users.destroy({ where: {} });
 });
 
 const testCases = {
