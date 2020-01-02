@@ -1,4 +1,5 @@
 "use strict";
+/* tslint:disable:variable-name */
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { __testModelRelated__ModelStatic } from "./types";
 

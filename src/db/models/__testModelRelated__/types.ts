@@ -1,4 +1,5 @@
 import { BuildOptions, Model } from "sequelize";
+/* tslint:disable:class-name */
 
 export interface __testModelRelated__Model extends Model {
   readonly id: number;
