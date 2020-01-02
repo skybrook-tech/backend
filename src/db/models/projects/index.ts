@@ -13,7 +13,8 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.INTEGER
       },
       name: { type: DataTypes.STRING, allowNull: false },
-      urlAffix: { type: DataTypes.STRING },
+      urlAffix: { type: DataTypes.STRING, defaultValue: "" },
+      userId: { type: DataTypes.STRING, allowNull: false },
       uuid: { type: DataTypes.STRING, allowNull: false },
       createdAt: {
         allowNull: false,
