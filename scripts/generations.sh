@@ -68,7 +68,7 @@ then
     generate_table_migration $MIGRATIONS_DIR $migrationName $modelNameCaps $migrationFields
     generate_model_types $modelDir $modelNameCaps $typeDefs
     generate_model_file $modelDir $modelNameCaps $modelFields
-    generate_model_controller $CONTROLLER_DIR $modelName
+    generate_model_controller $CONTROLLER_DIR $modelNameCaps
     generate_db_type $MODEL_DIR
   else
     echo -e "\033[31mERROR:\e[0m" Model "'${modelName}'" already exists. 1>&2
