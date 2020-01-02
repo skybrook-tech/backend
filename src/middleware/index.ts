@@ -3,14 +3,14 @@ import createCrudMiddleware from "./crud-generator";
 import defaults from "./defaults/response";
 import errorHandler from "./error-handler";
 import users from "./users";
-import Projects from "./Projects";
+import projects from "./projects";
 
 interface MiddlewareObject {
   authentication: any;
   createCrudMiddleware: any;
   defaults: any;
   errorHandler: any;
-  Projects: any;
+  projects: any;
   users: any;
 }
 
@@ -19,7 +19,7 @@ const middleware = {
   createCrudMiddleware,
   defaults,
   errorHandler,
-  Projects,
+  projects,
   users
 } as MiddlewareObject;
 

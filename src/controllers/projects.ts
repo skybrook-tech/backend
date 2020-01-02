@@ -8,7 +8,7 @@ const ProjectsCrud = middleware.createCrudMiddleware(db.Projects);
 export default createController({
   model: "Projects",
   middleware: {
-    create: [middleware.Projects.addUUID, ProjectsCrud.create],
+    create: [middleware.projects.addUUID, middleware.projects.addUserId, ProjectsCrud.create],
     getOne: [ProjectsCrud.findOne],
     getAll: [ProjectsCrud.findAll],
     update: [ProjectsCrud.update],

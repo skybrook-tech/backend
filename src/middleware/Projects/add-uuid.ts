@@ -3,31 +3,28 @@ import animalAdjective from "adjective-adjective-animal";
 import { Request, Response, NextFunction } from "express";
 import db from "../../db/models";
 
-const generateUUID = () => {
-  return new Promise(async (resolve, reject) => {
-    let UUIDExists = true;
-    let newUUID = null;
+const generateUUID = async () => {
+  let UUIDExists = true;
+  let newUUID = null;
 
-    while (UUIDExists) {
-      newUUID = await animalAdjective(1);
+  while (UUIDExists) {
+    newUUID = await animalAdjective(1);
 
-      newUUID += `-${uuid().split("-")[0]}`;
+    newUUID += `-${uuid().split("-")[0]}`;
 
-      const existingProject = await db.Projects.findOne({ where: { uuid: newUUID } });
+    const existingProject = await db.Projects.findOne({ where: { uuid: newUUID } });
 
-      if (!existingProject) {
-        UUIDExists = false;
-      }
+    if (!existingProject) {
+      UUIDExists = false;
     }
+  }
 
-    resolve(newUUID);
-  });
+  return newUUID;
 };
 
 const addUUID = async (req: Request, res: Response, next: NextFunction) => {
   try {
     req.body.uuid = await generateUUID();
-    req.body.userId = res.locals.currentUser.id;
 
     next();
   } catch (error) {
@@ -35,4 +32,5 @@ const addUUID = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+export { generateUUID };
 export default addUUID;
