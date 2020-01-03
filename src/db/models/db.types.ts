@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import { ColumnsModelStatic } from "./Columns/types";
 import { ModelsModelStatic } from "./Models/types";
 import { ProjectsModelStatic } from "./Projects/types";
 import { UsersModelStatic } from "./Users/types";
@@ -8,6 +9,7 @@ import { __testModel__ModelStatic } from "./__testModel__/types";
 export interface Db {
   sequelize: Sequelize;
   Sequelize: any;
+  Columns: ColumnsModelStatic;
   Models: ModelsModelStatic;
   Projects: ProjectsModelStatic;
   Users: UsersModelStatic;
