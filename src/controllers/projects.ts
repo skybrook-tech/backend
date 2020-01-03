@@ -20,7 +20,11 @@ export default createController({
   middleware: {
     create: [middleware.projects.addUUID, middleware.projects.addUserId, ProjectsCrud.create],
     getOne: [checkAuthorization(authFuncs.getOne), ProjectsCrud.findOne],
-    getAll: [checkAuthorization(authFuncs.getAll), ProjectsCrud.findAll],
+    getAll: [
+      checkAuthorization(authFuncs.getAll),
+      middleware.projects.filterByUserId,
+      ProjectsCrud.findAll
+    ],
     update: [checkAuthorization(authFuncs.update), ProjectsCrud.update],
     destroy: [checkAuthorization(authFuncs.destroy), ProjectsCrud.destroy]
   },
