@@ -2,6 +2,7 @@
 import createController from "../utils/create-controller";
 import middleware from "../middleware";
 import db from "../db/models";
+import Models from "./models";
 
 const ProjectsCrud = middleware.createCrudMiddleware(db.Projects);
 
@@ -14,5 +15,5 @@ export default createController({
     update: [ProjectsCrud.update],
     destroy: [ProjectsCrud.destroy]
   },
-  nestedControllers: []
+  nestedControllers: [Models]
 });
