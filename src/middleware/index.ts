@@ -4,6 +4,7 @@ import defaults from "./defaults/response";
 import errorHandler from "./error-handler";
 import users from "./users";
 import projects from "./projects";
+import models from "./models";
 
 interface MiddlewareObject {
   authentication: any;
@@ -12,6 +13,7 @@ interface MiddlewareObject {
   errorHandler: any;
   projects: any;
   users: any;
+  models: any;
 }
 
 const middleware = {
@@ -20,7 +22,8 @@ const middleware = {
   defaults,
   errorHandler,
   projects,
-  users
+  users,
+  models
 } as MiddlewareObject;
 
 export default middleware;

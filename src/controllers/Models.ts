@@ -19,7 +19,11 @@ const authFuncs = {
 export default createController({
   model: "Models",
   middleware: {
-    create: [checkAuthorization(authFuncs.create), ModelsCrud.create],
+    create: [
+      checkAuthorization(authFuncs.create),
+      ModelsCrud.create,
+      middleware.models.generateCreateTableMigration
+    ],
     getOne: [checkAuthorization(authFuncs.getOne), ModelsCrud.findOne],
     getAll: [checkAuthorization(authFuncs.getAll), ModelsCrud.findAll],
     update: [checkAuthorization(authFuncs.update), ModelsCrud.update],
