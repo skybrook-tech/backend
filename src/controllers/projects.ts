@@ -18,7 +18,12 @@ const authFuncs = {
 export default createController({
   model: "Projects",
   middleware: {
-    create: [middleware.projects.addUUID, middleware.projects.addUserId, ProjectsCrud.create],
+    create: [
+      middleware.projects.addUUID,
+      middleware.projects.addUserId,
+      ProjectsCrud.create,
+      middleware.projects.createTenantSchema
+    ],
     getOne: [checkAuthorization(authFuncs.getOne), ProjectsCrud.findOne],
     getAll: [
       checkAuthorization(authFuncs.getAll),
@@ -26,7 +31,11 @@ export default createController({
       ProjectsCrud.findAll
     ],
     update: [checkAuthorization(authFuncs.update), ProjectsCrud.update],
-    destroy: [checkAuthorization(authFuncs.destroy), ProjectsCrud.destroy]
+    destroy: [
+      checkAuthorization(authFuncs.destroy),
+      middleware.projects.dropTenantSchema,
+      ProjectsCrud.destroy
+    ]
   },
   nestedControllers: [Models]
 });

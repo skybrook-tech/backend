@@ -11,7 +11,8 @@ const createProject = async (options?: any) => {
 
   const uuid = await generateUUID();
 
-  const userId = props.userId || (await createUser());
+  // @ts-ignore
+  const userId = props.userId || (await createUser()).id;
 
   const body = {
     name: faker.random.word(),
