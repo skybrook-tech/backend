@@ -1,3 +1,4 @@
+import { ColumnsModelStatic } from "../Columns/types";
 import { BuildOptions, Model } from "sequelize";
 
 export interface ModelsModel extends Model {
@@ -5,6 +6,7 @@ export interface ModelsModel extends Model {
   projectId: number;
   name: string;
   relations: string;
+  columns: ColumnsModelStatic[];
   createdAt: Date;
   updatedAt: Date;
 }

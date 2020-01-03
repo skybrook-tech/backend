@@ -1,6 +1,7 @@
 "use strict";
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { MigrationsModelStatic } from "./types";
+import { Db } from "../db.types";
 
 module.exports = (sequelize: Sequelize) => {
   const Migrations = sequelize.define(
@@ -29,10 +30,15 @@ module.exports = (sequelize: Sequelize) => {
       }
     },
     {}
-  ) as MigrationsModelStatic & { associate: (models: Model) => void };
+  ) as MigrationsModelStatic & { associate: (db: Db) => void };
 
-  Migrations.associate = models => {
-    // associations go here
+  Migrations.associate = db => {
+    Migrations.belongsTo(db.Projects, {
+      targetKey: "id",
+      foreignKey: { allowNull: false, name: "projectId" },
+      onDelete: "CASCADE",
+      hooks: true
+    });
   };
 
   return Migrations;

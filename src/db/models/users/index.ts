@@ -2,6 +2,7 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import passportLocalSequelize from "passport-local-sequelize";
 import { UsersModelStatic } from "./types";
+import { Db } from "../db.types";
 
 module.exports = (sequelize: Sequelize) => {
   const Users = sequelize.define(
@@ -29,7 +30,7 @@ module.exports = (sequelize: Sequelize) => {
     },
     {}
   ) as UsersModelStatic & {
-    associate: (models: Model) => void;
+    associate: (db: Db) => void;
     createStrategy?: () => void;
     serializeUser?: () => void;
     deserializeUser?: () => void;
@@ -40,8 +41,13 @@ module.exports = (sequelize: Sequelize) => {
     hash: "password"
   });
 
-  Users.associate = models => {
-    // associations go here
+  Users.associate = db => {
+    Users.hasMany(db.Projects, {
+      foreignKey: { allowNull: false, name: "userId" },
+      onDelete: "CASCADE",
+      hooks: true,
+      as: "projects"
+    });
   };
 
   return Users;
