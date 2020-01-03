@@ -13,6 +13,7 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.INTEGER
       },
       projectId: { type: DataTypes.INTEGER, allowNull: false },
+      name: { type: DataTypes.STRING, allowNull: false },
       type: { type: DataTypes.STRING, allowNull: false },
       timeStamp: { type: DataTypes.STRING, allowNull: false },
       isMigrated: { type: DataTypes.BOOLEAN, allowNull: false },
