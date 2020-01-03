@@ -2,6 +2,12 @@ import isOwner from "../../authorization/is-project-owner";
 import createProject from "../../../factories/project";
 import createUser from "../../../factories/user";
 import { Request, Response } from "express";
+import db from "../../../db/models";
+
+afterAll(async () => {
+  await db.Projects.destroy({ where: {} });
+  await db.Users.destroy({ where: {} });
+});
 
 describe("middleware/models/authorisation/create: isOwner --- when currentUserId matches project.userId", () => {
   it("returns true", async () => {
