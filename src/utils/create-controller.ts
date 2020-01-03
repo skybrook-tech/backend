@@ -4,8 +4,12 @@ import pluralize from "pluralize";
 
 import { CreateControllerConfig, CreateControllerResult } from "./create-controller.types";
 
-const addParentId = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.locals.parent = { parentId: { ...req.params } };
+const addParentId = (parentIdKey: string) => (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  res.locals.parent = { parentId: { [parentIdKey]: req.params[parentIdKey] } };
   res.locals.context = { pathIds: { ...req.params } };
 
   next();
@@ -44,10 +48,10 @@ const createController = (config: CreateControllerConfig): CreateControllerResul
   nestedControllers.forEach(nestedController => {
     const { path: nestedPath, model: nestedModel } = nestedController.config;
 
-    const parentIdParam = pluralize.singular(model.toLowerCase());
-    const pathWithParentParams = `/:${parentIdParam}Id/${nestedPath || nestedModel}`;
+    const parentIdParam = `${pluralize.singular(model.toLowerCase())}Id`;
+    const pathWithParentParams = `/:${parentIdParam}/${nestedPath || nestedModel}`;
 
-    router.use(pathWithParentParams, addParentId, nestedController.router);
+    router.use(pathWithParentParams, addParentId(parentIdParam), nestedController.router);
   });
 
   return { router, config };
