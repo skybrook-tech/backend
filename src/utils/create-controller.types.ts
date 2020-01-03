@@ -20,7 +20,7 @@ export interface CreateControllerResult {
 }
 
 export interface CreateControllerConfig {
-  model: string;
+  Model: any;
   middleware: CreateControllerMiddleware;
   path?: string;
   nestedControllers?: CreateControllerResult[];

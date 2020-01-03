@@ -14,7 +14,7 @@ const testModelCrudMiddleware = createCrudMiddleware(db.__testModel__);
 const testModelEndpoint = "/testModel";
 
 const testController = createController({
-  model: "test_model",
+  Model: db.__testModel__,
   middleware: {
     create: [testModelCrudMiddleware.create],
     getOne: [testModelCrudMiddleware.findOne],

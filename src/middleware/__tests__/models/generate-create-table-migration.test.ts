@@ -29,7 +29,6 @@ describe("middleware/projects/generateCreateTableMigration", () => {
     await generateCreateTableMigration(req, res, next);
 
     const migrations = await db.Migrations.findAll();
-    console.log(migrations);
 
     expect(migrations.length).toBeTruthy();
   });

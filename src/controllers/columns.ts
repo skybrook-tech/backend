@@ -17,7 +17,7 @@ const authFuncs = {
 } as { create: any[]; getOne: any[]; getAll: any[]; update: any[]; destroy: any[] };
 
 export default createController({
-  model: "Columns",
+  Model: db.Columns,
   middleware: {
     create: [checkAuthorization(authFuncs.create), ColumnsCrud.create],
     getOne: [checkAuthorization(authFuncs.getOne), ColumnsCrud.findOne],

@@ -15,6 +15,11 @@ const setupServerDefaults = (config: Config = {}) => {
 
   dotenv.config();
 
+  app.use((req, res, next) => {
+    res.locals.context = {};
+    next();
+  });
+
   app.use(express.json());
   app.use(bodyParser.json());
 

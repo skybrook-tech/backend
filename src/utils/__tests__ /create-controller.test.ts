@@ -1,6 +1,6 @@
 import express from "express";
 import { MiddlewareFunction } from "../create-controller.types";
-
+import db from "../../db/models";
 import request from "supertest";
 import createController from "../create-controller";
 
@@ -13,7 +13,7 @@ const createResponseMiddleware = (response: any): MiddlewareFunction => (req, re
 
 describe("createController normal and nested", () => {
   const nestedController = createController({
-    model: "test_model_nested",
+    Model: db.__testModelRelated__,
     middleware: {
       getOne: [createResponseMiddleware("getOne nested")],
       getAll: [createResponseMiddleware("getAll nested")],
@@ -24,7 +24,7 @@ describe("createController normal and nested", () => {
   });
 
   const testController = createController({
-    model: "test_model",
+    Model: db.__testModel__,
     middleware: {
       getOne: [createResponseMiddleware("getOne")],
       getAll: [createResponseMiddleware("getAll")],

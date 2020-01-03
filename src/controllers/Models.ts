@@ -17,7 +17,7 @@ const authFuncs = {
 } as { create: any[]; getOne: any[]; getAll: any[]; update: any[]; destroy: any[] };
 
 export default createController({
-  model: "Models",
+  Model: db.Models,
   middleware: {
     create: [
       checkAuthorization(authFuncs.create),
@@ -27,7 +27,11 @@ export default createController({
     getOne: [checkAuthorization(authFuncs.getOne), ModelsCrud.findOne],
     getAll: [checkAuthorization(authFuncs.getAll), ModelsCrud.findAll],
     update: [checkAuthorization(authFuncs.update), ModelsCrud.update],
-    destroy: [checkAuthorization(authFuncs.destroy), ModelsCrud.destroy]
+    destroy: [
+      checkAuthorization(authFuncs.destroy),
+      middleware.models.generateDropTableMigration,
+      ModelsCrud.destroy
+    ]
   },
   nestedControllers: [Columns]
 });

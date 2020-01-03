@@ -16,7 +16,7 @@ const authFuncs = {
 } as { getOne: any[]; getAll: any[]; update: any[]; destroy: any[] };
 
 export default createController({
-  model: "Projects",
+  Model: db.Projects,
   middleware: {
     create: [
       middleware.projects.addUUID,

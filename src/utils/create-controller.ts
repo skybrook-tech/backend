@@ -1,22 +1,33 @@
-import * as express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import defaultResponse from "../middleware/defaults/response";
 import pluralize from "pluralize";
+import db from "../db/models";
 
 import { CreateControllerConfig, CreateControllerResult } from "./create-controller.types";
 
-const addParentId = (parentIdKey: string) => (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
+const addParentId = (parentIdKey: string) => (req: Request, res: Response, next: NextFunction) => {
   res.locals.parent = { parentId: { [parentIdKey]: req.params[parentIdKey] } };
-  res.locals.context = { pathIds: { ...req.params } };
+  res.locals.context.pathIds = { ...req.params };
 
   next();
 };
 
+const getIncluded = (Model: any) => (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { sequelizeParams = {} } = res.locals;
+
+    if (Model.getIncluded) {
+      res.locals.sequelizeParams = { ...sequelizeParams, include: Model.getIncluded(db) };
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createController = (config: CreateControllerConfig): CreateControllerResult => {
-  const { model, path, middleware, nestedControllers = [] } = config;
+  const { Model = {}, path, middleware, nestedControllers = [] } = config;
 
   const router = express.Router({ mergeParams: true });
 
@@ -25,31 +36,34 @@ const createController = (config: CreateControllerConfig): CreateControllerResul
 
   const { create, getOne, getAll, update, destroy } = middleware;
 
+  const sharedMiddleware = [getIncluded(Model)];
+
   if (create) {
-    router.post(BASE_ROUTE, create, defaultResponse);
+    router.post(BASE_ROUTE, sharedMiddleware, create, defaultResponse);
   }
 
   if (getOne) {
-    router.get(BASE_ROUTE_ID, getOne, defaultResponse);
+    router.get(BASE_ROUTE_ID, sharedMiddleware, getOne, defaultResponse);
   }
 
   if (getAll) {
-    router.get(BASE_ROUTE, getAll, defaultResponse);
+    router.get(BASE_ROUTE, sharedMiddleware, getAll, defaultResponse);
   }
 
   if (update) {
-    router.patch(BASE_ROUTE_ID, update, defaultResponse);
+    router.patch(BASE_ROUTE_ID, sharedMiddleware, update, defaultResponse);
   }
 
   if (destroy) {
-    router.delete(BASE_ROUTE_ID, destroy, defaultResponse);
+    router.delete(BASE_ROUTE_ID, sharedMiddleware, destroy, defaultResponse);
   }
 
   nestedControllers.forEach(nestedController => {
-    const { path: nestedPath, model: nestedModel } = nestedController.config;
+    const { path: nestedPath, Model: nestedModel } = nestedController.config;
 
-    const parentIdParam = `${pluralize.singular(model.toLowerCase())}Id`;
-    const pathWithParentParams = `/:${parentIdParam}/${nestedPath || nestedModel}`;
+    const parentIdParam = `${pluralize.singular(Model.name.toLowerCase())}Id`;
+    const pathWithParentParams = `/:${parentIdParam}/${nestedPath ||
+      nestedModel.name.toLowerCase()}`;
 
     router.use(pathWithParentParams, addParentId(parentIdParam), nestedController.router);
   });
