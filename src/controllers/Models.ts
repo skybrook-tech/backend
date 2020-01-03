@@ -2,20 +2,27 @@
 import createController from "../utils/create-controller";
 import middleware from "../middleware";
 import db from "../db/models";
-import authorization from "../middleware/authorization";
+import auth from "../middleware/authorization";
 import checkAuthorization from "../middleware/authorization/check-authorization";
 
 const ModelsCrud = middleware.createCrudMiddleware(db.Models);
-const sharedAuthorizations = checkAuthorization(authorization.isProjectOwner);
+
+const authFuncs = {
+  create: [auth.isProjectOwner],
+  getOne: [auth.isProjectOwner],
+  getAll: [auth.isProjectOwner],
+  update: [auth.isProjectOwner],
+  destroy: [auth.isProjectOwner]
+} as { create: any[]; getOne: any[]; getAll: any[]; update: any[]; destroy: any[] };
 
 export default createController({
   model: "Models",
   middleware: {
-    create: [sharedAuthorizations, ModelsCrud.create],
-    getOne: [sharedAuthorizations, ModelsCrud.findOne],
-    getAll: [sharedAuthorizations, ModelsCrud.findAll],
-    update: [sharedAuthorizations, ModelsCrud.update],
-    destroy: [sharedAuthorizations, ModelsCrud.destroy]
+    create: [checkAuthorization(authFuncs.create), ModelsCrud.create],
+    getOne: [checkAuthorization(authFuncs.getOne), ModelsCrud.findOne],
+    getAll: [checkAuthorization(authFuncs.getAll), ModelsCrud.findAll],
+    update: [checkAuthorization(authFuncs.update), ModelsCrud.update],
+    destroy: [checkAuthorization(authFuncs.destroy), ModelsCrud.destroy]
   },
   nestedControllers: []
 });

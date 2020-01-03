@@ -47,7 +47,7 @@ testCases.forEach(testCase => {
       const res = testCase.res as Response;
       const next = jest.fn();
 
-      await checkAuthorization(authExampleOne, authExampleTwo)(req, res, next);
+      await checkAuthorization([authExampleOne, authExampleTwo])(req, res, next);
 
       expect(next.mock.calls[0][0]).toBe(testCase.expected);
     });

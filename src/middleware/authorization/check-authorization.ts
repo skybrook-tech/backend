@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import errors from "../../errors";
 
-const checkAuthorization = (...authFunctions: any[]) => async (
+const checkAuthorization = (authFunctions: any[]) => async (
   req: Request,
   res: Response,
   next: NextFunction
