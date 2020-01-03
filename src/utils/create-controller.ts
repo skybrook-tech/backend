@@ -6,6 +6,8 @@ import { CreateControllerConfig, CreateControllerResult } from "./create-control
 
 const addParentId = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   res.locals.parent = { parentId: { ...req.params } };
+  res.locals.context = { pathIds: { ...req.params } };
+
   next();
 };
 
