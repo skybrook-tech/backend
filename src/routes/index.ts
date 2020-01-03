@@ -9,6 +9,5 @@ router.use("/users", controllers.users);
 
 // private
 router.use("/projects", middleware.authentication.requireJwt, controllers.projects.router);
-router.use("/models", middleware.authentication.requireJwt, controllers.models.router);
 
 export default router;
