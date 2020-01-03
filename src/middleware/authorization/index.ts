@@ -1,7 +1,7 @@
-import create from "./create";
+import checkAuthorization from "./check-authorization";
 
 const authorizationMiddleware = {
-  create
+  checkAuthorization
 };
 
 export default authorizationMiddleware;
