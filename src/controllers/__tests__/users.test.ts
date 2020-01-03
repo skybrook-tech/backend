@@ -80,7 +80,9 @@ interface TestFuncArgs {
 describe("users controller --- POST '/users/register' --- validations", () => {
   const testFunc = ({ description, expected, requestBody, beforeFunction }: TestFuncArgs) => {
     it(description, async done => {
-      if (beforeFunction) await beforeFunction;
+      if (beforeFunction) {
+        await beforeFunction;
+      }
 
       request(app)
         .post("/users/register")
@@ -116,7 +118,9 @@ describe("users controller --- POST '/users/register' --- success", () => {
 describe("users controller --- POST '/users/login' --- validations", () => {
   const testFunc = ({ description, expected, requestBody, beforeFunction }: TestFuncArgs) => {
     it(description, async done => {
-      if (beforeFunction) await beforeFunction;
+      if (beforeFunction) {
+        await beforeFunction;
+      }
 
       request(app)
         .post("/users/login")
