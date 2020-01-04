@@ -22,18 +22,18 @@ export default createController({
     create: [
       checkAuthorization(authFuncs.create),
       ModelsCrud.create,
-      middleware.models.generateCreateTableMigration
+      middleware.models.afterCreate
     ],
     getOne: [checkAuthorization(authFuncs.getOne), ModelsCrud.findOne],
     getAll: [checkAuthorization(authFuncs.getAll), ModelsCrud.findAll],
     update: [
       checkAuthorization(authFuncs.update),
-      middleware.models.onModelUpdate,
+      middleware.models.beforeUpdate,
       ModelsCrud.update
     ],
     destroy: [
       checkAuthorization(authFuncs.destroy),
-      middleware.models.generateDropTableMigration,
+      middleware.models.beforeDestroy,
       ModelsCrud.destroy
     ]
   },

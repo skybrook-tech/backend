@@ -1,17 +1,17 @@
-import generateCreateTableMigration from "./generate-create-table-migration";
-import generateDropTableMigration from "./generate-drop-table-migration";
-import onModelUpdate from "./on-model-update";
+import afterCreate from "./after-create";
+import beforeDestroy from "./before-destroy";
+import beforeUpdate from "./before-update";
 
 interface ModelsMiddleware {
-  generateCreateTableMigration: any;
-  generateDropTableMigration: any;
-  onModelUpdate: any;
+  afterCreate: any;
+  beforeDestroy: any;
+  beforeUpdate: any;
 }
 
 const modelsMiddleware = {
-  generateCreateTableMigration,
-  generateDropTableMigration,
-  onModelUpdate
+  afterCreate,
+  beforeDestroy,
+  beforeUpdate
 } as ModelsMiddleware;
 
 export default modelsMiddleware;

@@ -8,6 +8,8 @@ const isProjectOwner = async (req: Request, res: Response) => {
 
   const modelProject = await db.Projects.findOne({ where: { id: projectId } });
 
+  res.locals.context.currentProject = modelProject;
+
   return modelProject.userId === currentUserId;
 };
 
