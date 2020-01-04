@@ -26,7 +26,11 @@ export default createController({
     ],
     getOne: [checkAuthorization(authFuncs.getOne), ModelsCrud.findOne],
     getAll: [checkAuthorization(authFuncs.getAll), ModelsCrud.findAll],
-    update: [checkAuthorization(authFuncs.update), ModelsCrud.update],
+    update: [
+      checkAuthorization(authFuncs.update),
+      middleware.models.onModelUpdate,
+      ModelsCrud.update
+    ],
     destroy: [
       checkAuthorization(authFuncs.destroy),
       middleware.models.generateDropTableMigration,
