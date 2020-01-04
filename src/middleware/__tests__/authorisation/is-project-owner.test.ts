@@ -16,7 +16,10 @@ describe("middleware/models/authorisation/create: isOwner --- when currentUserId
 
     const req = {} as Request;
     const res = {
-      locals: { currentUser: { id: user.id }, context: { pathIds: { projectId: project.id } } }
+      locals: {
+        currentUser: user,
+        context: { currentProject: project, pathIds: { projectId: project.id } }
+      }
     } as Response;
 
     const expected = true;
@@ -35,7 +38,7 @@ describe("middleware/models/authorisation/create: isOwner --- currentUserId matc
     req.params = {};
     req.params.id = project.id;
 
-    const res = { locals: { currentUser: { id: user.id } } } as Response;
+    const res = { locals: { context: { currentProject: project }, currentUser: user } } as Response;
 
     const expected = true;
     const actual = await isOwner(req, res);
@@ -51,7 +54,10 @@ describe("middleware/models/authorisation/create: isOwner --- when currentUserId
 
     const req = {} as Request;
     const res = {
-      locals: { currentUser: { id: 0 }, context: { pathIds: { projectId: project.id } } }
+      locals: {
+        currentUser: { id: 0 },
+        context: { currentProject: project, pathIds: { projectId: project.id } }
+      }
     } as Response;
 
     const expected = false;
