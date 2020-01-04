@@ -1,9 +1,9 @@
-import beforeDestroy from "../../models/before-destroy";
+import beforeDestroy from "../../../models/before-destroy";
 import { Request, Response } from "express";
-import createProject from "../../../factories/project";
-import createModel from "../../../factories/model";
-import db from "../../../db/models";
-import migrationTypes from "../../../constants/migration-types";
+import createProject from "../../../../factories/project";
+import createModel from "../../../../factories/model";
+import db from "../../../../db/models";
+import migrationTypes from "../../../../constants/migration-types";
 
 describe("middleware/projects/beforeDestroy", () => {
   let project: any;
