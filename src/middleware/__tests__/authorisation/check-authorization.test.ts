@@ -18,7 +18,6 @@ const authExampleOne = (req: Request, res: Response) => {
 
 const authExampleTwo = (req: Request, res: Response) => {
   return new Promise(resolve => {
-    console.log(req.body.criteriaTwo === res.locals.criteriaTwoMirror);
     resolve(req.body.criteriaTwo === res.locals.criteriaTwoMirror);
   });
 };
