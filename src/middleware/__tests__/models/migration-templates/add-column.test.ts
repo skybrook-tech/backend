@@ -6,7 +6,7 @@ describe("middleware/models/migration-templates/addColumn", () => {
   const model = { id: 200, name: "mockModel" };
   const nextValue = { name: "mockColumn", type: "STRING", options: {} };
 
-  it("returns addColumn migration", async () => {
+  it("returns addColumn migration", () => {
     const addColumnMigration = addColumn({ project, model, nextValue });
 
     expect(addColumnMigration.type).toBe(migrationTypes.ADD_COLUMN);

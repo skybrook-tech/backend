@@ -7,7 +7,7 @@ describe("middleware/models/migration-templates/changeColumn", () => {
   const nextValue = { name: "mockColumn", type: "STRING", options: {} };
   const prevValue = { name: "mockColumn", type: "INTEGER", options: {} };
 
-  it("returns changeColumn migration", async () => {
+  it("returns changeColumn migration", () => {
     const changeColumnMigration = changeColumn({ project, model, nextValue, prevValue });
 
     expect(changeColumnMigration.type).toBe(migrationTypes.CHANGE_COLUMN);
