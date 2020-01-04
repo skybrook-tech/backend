@@ -1,11 +1,11 @@
-import generateCreateTableMigration from "../../models/generate-create-table-migration";
+import generateDropTableMigration from "../../models/generate-drop-table-migration";
 import { Request, Response } from "express";
 import createProject from "../../../factories/project";
 import createModel from "../../../factories/model";
 import db from "../../../db/models";
 import migrationTypes from "../../../constants/migration-types";
 
-describe("middleware/projects/generateCreateTableMigration", () => {
+describe("middleware/projects/generateDropTableMigration", () => {
   let project: any;
   let model: any;
 
@@ -30,27 +30,31 @@ describe("middleware/projects/generateCreateTableMigration", () => {
   });
 
   it("creates a new createTable migration", async () => {
-    const req = { body: {} } as Request;
+    const req = { params: {} } as Request;
+    req.params.id = model.id;
+
     const res = {
-      locals: { response: { data: model }, context: { pathIds: { projectId: project.id } } }
+      locals: { context: { pathIds: { projectId: project.id } } }
     } as Response;
+
     const next = jest.fn();
 
-    await generateCreateTableMigration(req, res, next);
+    await generateDropTableMigration(req, res, next);
 
     const migrations = await db.Migrations.findAll();
 
     expect(migrations.length).toBeTruthy();
-    expect(migrations[0].type).toBe(migrationTypes.CREATE_TABLE);
+    expect(migrations.length).toBeTruthy();
+    expect(migrations[0].type).toBe(migrationTypes.DROP_TABLE);
     expect(migrations[0].isMigrated).toBe(false);
 
-    expect(migrations[0].up.action).toBe(migrationTypes.CREATE_TABLE);
-    expect(migrations[0].up.tableName).toBe(model.name);
-    expect(migrations[0].up.columns.length).toBe(3);
-    expect(migrations[0].up.schema).toBe(project.uuid);
-
-    expect(migrations[0].down.action).toBe(migrationTypes.DROP_TABLE);
+    expect(migrations[0].down.action).toBe(migrationTypes.CREATE_TABLE);
     expect(migrations[0].down.tableName).toBe(model.name);
+    expect(migrations[0].down.columns.length).toBe(3);
     expect(migrations[0].down.schema).toBe(project.uuid);
+
+    expect(migrations[0].up.action).toBe(migrationTypes.DROP_TABLE);
+    expect(migrations[0].up.tableName).toBe(model.name);
+    expect(migrations[0].up.schema).toBe(project.uuid);
   });
 });

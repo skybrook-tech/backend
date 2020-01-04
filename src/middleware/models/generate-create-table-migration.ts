@@ -9,23 +9,24 @@ const generateCreateTableMigration = async (req: Request, res: Response, next: N
 
     const project = await db.Projects.findOne({ where: { id: projectId } });
 
-    const migrationName = `${Date.now()}-${migrationTypes.CREATE_TABLE}-${newModel.name}`;
+    const timeStamp = Date.now();
+    const migrationName = `${timeStamp}-${migrationTypes.CREATE_TABLE}-${newModel.name}`;
 
     await db.Migrations.create({
       projectId,
       name: migrationName,
       type: migrationTypes.CREATE_TABLE,
-      timeStamp: Date.now(),
+      timeStamp,
       isMigrated: false,
       up: {
         action: migrationTypes.CREATE_TABLE,
-        table_name: newModel.name,
+        tableName: newModel.name,
         schema: project.uuid,
         columns: newModel.columns || []
       },
       down: {
         action: migrationTypes.DROP_TABLE,
-        table_name: newModel.name,
+        tableName: newModel.name,
         schema: project.uuid
       }
     });

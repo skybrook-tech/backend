@@ -6,8 +6,8 @@ export interface MigrationsModel extends Model {
   type: string;
   timeStamp: string;
   isMigrated: boolean;
-  up: string;
-  down: string;
+  up: any;
+  down: any;
   createdAt: Date;
   updatedAt: Date;
 }

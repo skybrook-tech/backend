@@ -6,9 +6,9 @@ import createProject from "./project";
 const createModel = async (options?: any) => {
   const { props = {} } = options || {};
 
-  const locals = { sequelizeParams: {} };
+  // @ts-ignore
+  const locals = { sequelizeParams: { include: db.Models.getIncluded(db) } };
 
-  // ts-ignore
   const projectId = props.projectId || (await createProject()).id;
 
   const body = {
@@ -18,7 +18,7 @@ const createModel = async (options?: any) => {
     ...props
   };
 
-  return createRecord({ Model: db.Users, locals, body });
+  return createRecord({ Model: db.Models, locals, body });
 };
 
 export default createModel;
