@@ -1,13 +1,13 @@
 import addColumn from "../../../models/migration-templates/remove-column";
 import migrationTypes from "../../../../constants/migration-types";
 
-describe("middleware/models/migration-templates/addColumn", () => {
+describe("middleware/models/migration-templates/removeColumn", () => {
   const project = { id: 24, uuid: "some-uuid" };
   const model = { id: 200, name: "mockModel" };
   const prevValue = { name: "mockColumn", type: "STRING", options: {} };
   const nextValue = { name: "mockColumn", type: "STRING", options: {} };
 
-  it("returns addColumn migration", () => {
+  it("returns removeColumn migration", () => {
     const addColumnMigration = addColumn({ project, model, nextValue, prevValue });
 
     expect(addColumnMigration.type).toBe(migrationTypes.REMOVE_COLUMN);
