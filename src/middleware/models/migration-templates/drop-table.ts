@@ -1,5 +1,5 @@
 import migrationTypes from "../../../constants/migration-types";
-import { MigrationArgs } from "../before-update/types";
+import { MigrationArgs } from "../types";
 
 const dropTable = ({ project, model }: MigrationArgs) => {
   const timeStamp = Date.now();
