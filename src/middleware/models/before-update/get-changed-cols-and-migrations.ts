@@ -4,31 +4,38 @@ import isEqual from "fast-deep-equal";
 import get from "lodash/get";
 import { MigrationArgs, Column } from "../types";
 import migrationTemplates from "../migration-templates";
+import migrationTypes from "../../../constants/migration-types";
 
 const createMigrationSwitch = (migrationArgs: MigrationArgs) => {
   const { prevValue, nextValue } = migrationArgs;
 
   if (!prevValue) {
-    return migrationTemplates.addColumn(migrationArgs);
+    return [migrationTemplates.addColumn(migrationArgs)];
   }
 
   const { name: prevName, ...prevRest } = prevValue;
   const { name: nextName, _delete, ...nextRest } = nextValue;
 
-  if (prevName !== nextName) {
-    return migrationTemplates.renameColumn(migrationArgs);
-  }
+  const migrations = [];
 
   if (_delete) {
-    return migrationTemplates.removeColumn(migrationArgs);
+    return [migrationTemplates.removeColumn(migrationArgs)];
+  }
+
+  if (prevName !== nextName) {
+    migrations.push(migrationTemplates.renameColumn(migrationArgs));
   }
 
   if (!isEqual(nextRest, prevRest)) {
-    return migrationTemplates.changeColumn(migrationArgs);
+    migrations.push(migrationTemplates.changeColumn(migrationArgs));
   }
+
+  return migrations;
 };
 
-const getColumnComparisons = async (req: Request, res: Response) => {
+// TODO: rewrite tests and think of better name
+
+const getChangedColsAndMigrations = async (req: Request, res: Response) => {
   const project = res.locals.context.currentProject;
   const modelId = parseInt(req.params.id, 10);
   const model = await db.Models.findOne({ where: { id: modelId } });
@@ -39,17 +46,31 @@ const getColumnComparisons = async (req: Request, res: Response) => {
 
   const prevColumns = await db.Columns.findAll({ where: { id: existingColIds } });
 
-  return incomingColumns.map((col: Column) => {
+  const newAndUpdatedColumns: any[] = [];
+  const deletedColumns: any[] = [];
+  let migrations: any[] = [];
+
+  incomingColumns.forEach((col: Column) => {
     const matchingColumn = prevColumns.find(prevCol => prevCol.id === col.id);
 
     const prevValue = get(matchingColumn, "dataValues", null);
     const nextValue = { ...prevValue, ...col, modelId };
 
-    const migration = createMigrationSwitch({ prevValue, nextValue, project, model });
+    const columnMigrations = createMigrationSwitch({ prevValue, nextValue, project, model });
 
-    return { prevValue, nextValue, migration };
+    if (columnMigrations.length) {
+      migrations = [...migrations, ...columnMigrations];
+
+      if (columnMigrations[0].type === migrationTypes.REMOVE_COLUMN) {
+        deletedColumns.push(nextValue);
+      } else {
+        newAndUpdatedColumns.push(nextValue);
+      }
+    }
   });
+
+  return { newAndUpdatedColumns, deletedColumns, migrations };
 };
 
 export { createMigrationSwitch };
-export default getColumnComparisons;
+export default getChangedColsAndMigrations;

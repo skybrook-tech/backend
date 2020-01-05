@@ -1,4 +1,4 @@
-import { createMigrationSwitch } from "../../../models/before-update/get-column-comparisons";
+import { createMigrationSwitch } from "../../../models/before-update/get-changed-cols-and-migrations";
 import migrationTypes from "../../../../constants/migration-types";
 
 interface TestCase {
@@ -9,6 +9,7 @@ interface TestCase {
   expected: string;
 }
 
+// TODO: fix/improve this test to cover migrations being returned as an array
 const testCases = [
   {
     description: "when a column's name has changed",
@@ -49,7 +50,8 @@ describe("middleware/models/before-update/createMigrationSwitch --- ", () => {
     describe(testCase.description, () => {
       it(testCase.expectationString, async () => {
         const actual = createMigrationSwitch({ project, model, prevValue, nextValue });
-        expect(actual.type).toBe(testCase.expected);
+
+        expect(actual[0].type).toBe(testCase.expected);
       });
     });
   });
