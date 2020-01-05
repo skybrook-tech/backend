@@ -36,13 +36,12 @@ describe("middleware/projects/migrate/migrations/dropTable", () => {
   it("runs createTable migration against specified postgres schema", async () => {
     await dropTableMigrator.up(dropTableMigration);
 
-    const [tables] = await db.sequelize.query(`SELECT table_name
+    const [table] = await db.sequelize.query(`SELECT table_name
     FROM information_schema.tables
     WHERE table_type='BASE TABLE'
-    AND table_schema='${project.uuid}';`);
+    AND table_schema='${project.uuid}'
+    AND table_name='${model.name}';`);
 
-    const newTable = tables.find(({ table_name }) => table_name === model.name);
-
-    expect(newTable).toBeFalsy();
+    expect(table[0]).toBeFalsy();
   });
 });
