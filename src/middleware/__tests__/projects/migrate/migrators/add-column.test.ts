@@ -52,12 +52,13 @@ describe("middleware/projects/migrate/migrators/addColumn", () => {
       AND column_name   = '${column.name}'`;
 
       const [columnBeforeMigration] = await db.sequelize.query(getColumnQuery);
+
       expect(columnBeforeMigration[0]).toBeFalsy();
 
       await addColumnMigrator.up(addColumnMigration);
       const updatedMigration = await db.Migrations.findByPk(addColumnMigration.id);
-
       const [columnAfterMigration] = await db.sequelize.query(getColumnQuery);
+
       expect(columnAfterMigration[0]).toBeTruthy();
       // @ts-ignore
       expect(columnAfterMigration[0].data_type).toBe("character varying");
