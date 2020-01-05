@@ -11,7 +11,7 @@ const dropTable = {
 
         // @ts-ignore
         await db.sequelize.queryInterface[type](tableNameAndSchema);
-        await migration.update({ is_migrated: true, ...migration });
+        await migration.update({ isMigrated: true, ...migration });
 
         resolve();
       } catch (error) {
