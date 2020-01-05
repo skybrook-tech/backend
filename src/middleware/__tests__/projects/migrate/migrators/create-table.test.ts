@@ -1,4 +1,4 @@
-import createTableMigration from "../../../../projects/migrate/migrations/create-table";
+import createTableMigration from "../../../../projects/migrate/migrators/create-table";
 import { Request, Response } from "express";
 import createProject from "../../../../../factories/project";
 import createModel from "../../../../../factories/model";
