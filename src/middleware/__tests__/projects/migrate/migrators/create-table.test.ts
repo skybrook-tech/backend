@@ -1,5 +1,4 @@
 import createTableMigrator from "../../../../projects/migrate/migrators/create-table";
-import { Request, Response } from "express";
 import createProject from "../../../../../factories/project";
 import createModel from "../../../../../factories/model";
 import db from "../../../../../db/models";
@@ -8,12 +7,14 @@ import migrationTemplates from "../../../../models/migration-templates";
 describe("middleware/projects/migrate/migrators/createTable", () => {
   let project: any;
   let model: any;
-  let migration: any;
+  let createTableMigration: any;
 
   beforeAll(async () => {
     project = await createProject();
     model = await createModel();
-    migration = await db.Migrations.create(migrationTemplates.createTable({ project, model }));
+    createTableMigration = await db.Migrations.create(
+      migrationTemplates.createTable({ project, model })
+    );
 
     // @ts-ignore
     await db.sequelize.queryInterface.createSchema(`"${project.uuid}"`);
@@ -27,7 +28,7 @@ describe("middleware/projects/migrate/migrators/createTable", () => {
   });
 
   it("runs createTable migration against specified postgres schema", async () => {
-    await createTableMigrator.up(migration);
+    await createTableMigrator.up(createTableMigration);
 
     const [tables] = await db.sequelize.query(`SELECT table_name
     FROM information_schema.tables
