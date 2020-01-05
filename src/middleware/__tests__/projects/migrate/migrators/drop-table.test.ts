@@ -33,15 +33,25 @@ describe("middleware/projects/migrate/migrations/dropTable", () => {
     await db.Users.destroy({ where: {} });
   });
 
-  it("runs createTable migration against specified postgres schema", async () => {
-    await dropTableMigrator.up(dropTableMigration);
+  describe("when run agains database", () => {
+    it("removes table from specified schema and updates migration to isMigrated: true", async () => {
+      const findTableQuery = `
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_type='BASE TABLE'
+      AND table_schema='${project.uuid}'
+      AND table_name='${model.name}';`;
 
-    const [table] = await db.sequelize.query(`SELECT table_name
-    FROM information_schema.tables
-    WHERE table_type='BASE TABLE'
-    AND table_schema='${project.uuid}'
-    AND table_name='${model.name}';`);
+      const [tableBeforeMigration] = await db.sequelize.query(findTableQuery);
 
-    expect(table[0]).toBeFalsy();
+      expect(tableBeforeMigration[0]).toBeTruthy();
+
+      await dropTableMigrator.up(dropTableMigration);
+      const [tableAfterMigration] = await db.sequelize.query(findTableQuery);
+      const updatedMigration = await db.Migrations.findByPk(createTableMigration.id);
+
+      expect(updatedMigration.isMigrated).toBe(true);
+      expect(tableAfterMigration[0]).toBeFalsy();
+    });
   });
 });
