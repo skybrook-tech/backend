@@ -2,6 +2,7 @@ import { BuildOptions, Model } from "sequelize";
 
 export interface MigrationsModel extends Model {
   readonly id: number;
+  readonly dataValues: any;
   projectId: number;
   name: string;
   type: string;

@@ -3,6 +3,7 @@ import { BuildOptions, Model } from "sequelize";
 
 export interface __testModel__Model extends Model {
   readonly id: number;
+  readonly dataValues: any;
   attr1: string;
   attr2: number;
   attr3: boolean;

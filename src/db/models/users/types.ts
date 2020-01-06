@@ -2,6 +2,7 @@ import { BuildOptions, Model } from "sequelize";
 
 export interface UsersModel extends Model {
   readonly id: number;
+  readonly dataValues: any;
   firstName: string;
   lastName: string;
   username: string;

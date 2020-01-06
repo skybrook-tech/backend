@@ -3,6 +3,7 @@ import { BuildOptions, Model } from "sequelize";
 
 export interface ModelsModel extends Model {
   readonly id: number;
+  readonly dataValues: any;
   projectId: number;
   name: string;
   relations: string;

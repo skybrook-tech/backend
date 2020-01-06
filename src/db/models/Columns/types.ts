@@ -2,6 +2,7 @@ import { BuildOptions, Model } from "sequelize";
 
 export interface ColumnsModel extends Model {
   readonly id: number;
+  readonly dataValues: any;
   name: string;
   type: string;
   options: string;

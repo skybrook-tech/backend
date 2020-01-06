@@ -2,6 +2,7 @@ import { BuildOptions, Model } from "sequelize";
 
 export interface ProjectsModel extends Model {
   readonly id: number;
+  readonly dataValues: any;
   name: string;
   urlAffix: string;
   uuid: string;
