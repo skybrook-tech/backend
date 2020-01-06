@@ -18,6 +18,8 @@ const runMigrations = (res: Response) =>
         await get(migrationFunctions, migration.type).up(migration);
       }
 
+      res.locals.response.data = await db.Migrations.findAll({ where: { projectId } });
+
       resolve();
     } catch (error) {
       reject(error);
