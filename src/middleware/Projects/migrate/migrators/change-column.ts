@@ -27,9 +27,9 @@ const changeColumn = {
         const tableNameAndSchema = { tableName, schema };
 
         const { type: fromType } = from;
-        const { name, type: toType, ...attr } = to;
+        const { name, type: toType, options } = to;
 
-        const attribute = { ...attr, type: checkIfNeedsCasting({ fromType, toType, name }) };
+        const attribute = { ...options, type: checkIfNeedsCasting({ fromType, toType, name }) };
 
         // @ts-ignore
         await db.sequelize.queryInterface[type](tableNameAndSchema, name, attribute);
