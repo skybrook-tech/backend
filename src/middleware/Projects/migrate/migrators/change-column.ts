@@ -34,7 +34,7 @@ const changeColumn = {
         // @ts-ignore
         await db.sequelize.queryInterface[type](tableNameAndSchema, name, attribute);
 
-        await migration.update({ is_migrated: true, ...migration });
+        await migration.update({ isMigrated: true, ...migration });
 
         resolve();
       } catch (error) {
