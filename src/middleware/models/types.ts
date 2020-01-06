@@ -6,9 +6,14 @@ export interface Column {
   _delete?: boolean;
 }
 
+export interface Model {
+  id?: number;
+  name: string;
+}
+
 export interface MigrationArgs {
-  prevValue?: Column;
-  nextValue?: Column;
+  prevValue?: Column | Model;
+  nextValue?: Column | Model;
   project?: any;
   model?: any;
 }
