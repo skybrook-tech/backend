@@ -14,7 +14,7 @@ const createColumns = async (options?: any) => {
   const body = {
     modelId,
     name: faker.random.word(),
-    type: faker.random.word(),
+    type: "STRING",
     options: {},
     ...props
   };
