@@ -15,6 +15,7 @@ import { BuildOptions, Model } from "sequelize";
 
 export interface $typeName extends Model {
   readonly id: number;
+  readonly dataValues: any;
   $typeDefs
   createdAt: Date;
   updatedAt: Date;
