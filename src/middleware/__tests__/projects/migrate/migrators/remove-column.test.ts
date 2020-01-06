@@ -54,7 +54,7 @@ describe("middleware/projects/migrate/migrators/addColumn", () => {
   });
 
   describe("when run agains database", () => {
-    it("creates column and updates migration to isMigrated: true", async () => {
+    it("removes column from table and updates migration to isMigrated: true", async () => {
       const getColumnsQuery = `
       SELECT *
       FROM information_schema.columns
@@ -62,15 +62,15 @@ describe("middleware/projects/migrate/migrators/addColumn", () => {
       AND table_name   = '${model.name}'
       AND column_name   = '${column.name}';`;
 
-      const [columnExists] = await db.sequelize.query(getColumnsQuery);
+      const [actualColumn] = await db.sequelize.query(getColumnsQuery);
 
-      expect(columnExists[0]).toBeTruthy();
+      expect(actualColumn[0]).toBeTruthy();
 
       await removeColumnMigrator.up(removeColumnMigration);
       const updatedMigration = await db.Migrations.findByPk(addColumnMigration.id);
-      const [columnExistsAfterMigration] = await db.sequelize.query(getColumnsQuery);
+      const [actualColumnAfterMigration] = await db.sequelize.query(getColumnsQuery);
 
-      expect(columnExistsAfterMigration[0]).toBeFalsy();
+      expect(actualColumnAfterMigration[0]).toBeFalsy();
 
       expect(updatedMigration.isMigrated).toBe(true);
     });

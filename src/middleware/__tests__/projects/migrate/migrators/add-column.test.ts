@@ -43,7 +43,7 @@ describe("middleware/projects/migrate/migrators/addColumn", () => {
   });
 
   describe("when run agains database", () => {
-    it("creates column and updates migration to isMigrated: true", async () => {
+    it("adds column to table and updates migration to isMigrated: true", async () => {
       const getColumnQuery = `
       SELECT *
       FROM information_schema.columns
