@@ -38,7 +38,8 @@ const createMigrationSwitch = (migrationArgs: MigrationArgs) => {
 const getChangedColsAndMigrations = async (req: Request, res: Response) => {
   const project = res.locals.context.currentProject;
   const modelId = parseInt(req.params.id, 10);
-  const model = await db.Models.findOne({ where: { id: modelId } });
+  const prevModel = await db.Models.findOne({ where: { id: modelId } });
+  const model = { ...prevModel.dataValues, name: req.body.name || prevModel.name };
 
   const incomingColumns = req.body.columns.concat() as Column[];
 
