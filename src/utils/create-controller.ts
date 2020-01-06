@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import defaultResponse from "../middleware/defaults/response";
 import pluralize from "pluralize";
+import get from "lodash/get";
 import db from "../db/models";
 
 import { CreateControllerConfig, CreateControllerResult } from "./create-controller.types";
@@ -27,7 +28,7 @@ const getIncluded = (Model: any) => (req: Request, res: Response, next: NextFunc
 };
 
 const createController = (config: CreateControllerConfig): CreateControllerResult => {
-  const { Model = {}, path, middleware, nestedControllers = [] } = config;
+  const { Model = {}, path, middleware, customRoutes = [], nestedControllers = [] } = config;
 
   const router = express.Router({ mergeParams: true });
 
@@ -57,6 +58,11 @@ const createController = (config: CreateControllerConfig): CreateControllerResul
   if (destroy) {
     router.delete(BASE_ROUTE_ID, sharedMiddleware, destroy, defaultResponse);
   }
+
+  customRoutes.forEach(route => {
+    // @ts-ignore
+    router[route.method](route.endpoint, sharedMiddleware, route.middleware, defaultResponse);
+  });
 
   nestedControllers.forEach(nestedController => {
     const { path: nestedPath, Model: nestedModel } = nestedController.config;

@@ -19,9 +19,16 @@ export interface CreateControllerResult {
   router?: express.Router;
 }
 
+export interface CustomRoute {
+  method: string;
+  endpoint: string;
+  middleware: MiddlewareFunction[];
+}
+
 export interface CreateControllerConfig {
   Model: any;
   middleware: CreateControllerMiddleware;
   path?: string;
+  customRoutes?: CustomRoute[];
   nestedControllers?: CreateControllerResult[];
 }
