@@ -17,11 +17,13 @@ describe("middleware/models/migration-templates/changeColumn", () => {
     expect(changeColumnMigration.up.action).toBe(migrationTypes.CHANGE_COLUMN);
     expect(changeColumnMigration.up.tableName).toBe(model.name);
     expect(changeColumnMigration.up.schema).toBe(project.uuid);
-    expect(changeColumnMigration.up.column).toBe(nextValue);
+    expect(changeColumnMigration.up.to).toBe(nextValue);
+    expect(changeColumnMigration.up.from).toBe(prevValue);
 
     expect(changeColumnMigration.down.action).toBe(migrationTypes.CHANGE_COLUMN);
     expect(changeColumnMigration.down.tableName).toBe(model.name);
     expect(changeColumnMigration.down.schema).toBe(project.uuid);
-    expect(changeColumnMigration.down.column).toBe(prevValue);
+    expect(changeColumnMigration.down.to).toBe(prevValue);
+    expect(changeColumnMigration.down.from).toBe(nextValue);
   });
 });

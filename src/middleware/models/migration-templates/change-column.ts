@@ -15,13 +15,15 @@ const changeColumnTemplate = ({ prevValue, nextValue, project, model }: Migratio
       action: migrationTypes.CHANGE_COLUMN,
       tableName: model.name,
       schema: project.uuid,
-      column: nextValue
+      to: nextValue,
+      from: prevValue
     },
     down: {
       action: migrationTypes.CHANGE_COLUMN,
       tableName: model.name,
       schema: project.uuid,
-      column: prevValue
+      to: prevValue,
+      from: nextValue
     }
   };
 };
