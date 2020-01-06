@@ -2,6 +2,7 @@ import addColumn from "./add-column";
 import changeColumn from "./change-column";
 import createTable from "./create-table";
 import dropTable from "./drop-table";
+import renameTable from "./rename-table";
 import removeColumn from "./remove-column";
 import renameColumn from "./rename-column";
 import { MigrationArgs } from "../types";
@@ -23,6 +24,7 @@ interface MigrationTemplates {
   changeColumn: MigrationTemplateFunction;
   createTable: MigrationTemplateFunction;
   dropTable: MigrationTemplateFunction;
+  renameTable: MigrationTemplateFunction;
   removeColumn: MigrationTemplateFunction;
   renameColumn: MigrationTemplateFunction;
 }
@@ -32,6 +34,7 @@ const migrationTemplates = {
   changeColumn,
   createTable,
   dropTable,
+  renameTable,
   removeColumn,
   renameColumn
 } as MigrationTemplates;
