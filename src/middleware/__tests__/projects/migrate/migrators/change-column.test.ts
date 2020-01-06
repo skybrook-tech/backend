@@ -70,7 +70,7 @@ describe("middleware/projects/migrate/migrators/addColumn", () => {
       expect(actualColumn[0].data_type).toBe("character varying");
 
       await changeColumnMigrator.up(changeColumnMigration);
-      const updatedMigration = await db.Migrations.findByPk(addColumnMigration.id);
+      const updatedMigration = await db.Migrations.findByPk(changeColumnMigration.id);
       const [actualColumnAfterMigration] = await db.sequelize.query(getColumnsQuery);
 
       // @ts-ignore
