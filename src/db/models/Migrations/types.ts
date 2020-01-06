@@ -3,6 +3,7 @@ import { BuildOptions, Model } from "sequelize";
 export interface MigrationsModel extends Model {
   readonly id: number;
   projectId: number;
+  name: string;
   type: string;
   timeStamp: string;
   isMigrated: boolean;
