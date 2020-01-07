@@ -12,8 +12,8 @@ export interface Model {
 }
 
 export interface MigrationArgs {
-  prevValue?: Column | Model;
-  nextValue?: Column | Model;
+  prevValue?: any;
+  nextValue?: any;
   project?: any;
   model?: any;
 }
