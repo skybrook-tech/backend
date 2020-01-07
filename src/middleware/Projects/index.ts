@@ -1,16 +1,14 @@
-import addUUID from "./add-uuid";
-import addUserId from "./add-user-id";
-import createTenantSchema from "./create-tenant-schema";
-import dropTenantSchema from "./drop-tenant-schema";
-import filterByUserId from "./filter-by-user-id";
+import beforeCreate from "./before-create";
+import afterCreate from "./after-create";
+import beforeDestroy from "./before-destroy";
+import beforeGetAll from "./before-get-all";
 import migrate from "./migrate";
 
 const projectsMiddleware = {
-  addUUID,
-  addUserId,
-  createTenantSchema,
-  dropTenantSchema,
-  filterByUserId,
+  beforeCreate,
+  afterCreate,
+  beforeDestroy,
+  beforeGetAll,
   migrate
 };
 

@@ -1,7 +1,7 @@
 import createRecord from "../middleware/crud-generator/create-record";
 import db from "../db/models";
 import faker from "faker";
-import { generateUUID } from "../middleware/projects/add-uuid";
+import { generateUUID } from "../middleware/projects/before-create/add-uuid";
 import createUser from "./user";
 
 const createProject = async (options?: any) => {

@@ -52,14 +52,18 @@ describe("middleware/projects/migrate/runMigrations", () => {
   });
 
   it("runs all migrations that haven't been run yet", async () => {
+    const req = {} as Request;
     const res = {
       locals: { context: { currentProject: project }, response: { data: null } }
     } as Response;
 
-    await runMigrations(res);
+    const next = jest.fn();
+
+    await runMigrations(req, res, next);
 
     const migrationsAfter = await db.Migrations.findAll();
 
     expect(migrationsAfter.filter(mgr => mgr.isMigrated).length).toBe(3);
+    expect(next.mock.calls.length).toBe(1);
   });
 });

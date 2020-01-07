@@ -1,30 +1,30 @@
-import dropTenantSchema from "../../projects/drop-tenant-schema";
+import createTenantSchema from "../../../projects/after-create/create-tenant-schema";
 import { Request, Response } from "express";
-import createProject from "../../../factories/project";
-import db from "../../../db/models";
+import createProject from "../../../../factories/project";
+import db from "../../../../db/models";
 
-describe("middleware/projects/dropTenantSchema", () => {
+describe("middleware/projects/createTenantSchema", () => {
   let project: any;
 
   beforeAll(async () => {
     project = await createProject();
-    // @ts-ignore
-    await db.sequelize.queryInterface.createSchema(`"${project.uuid}"`);
   });
 
   afterAll(async () => {
     // @ts-ignore
+    await db.sequelize.queryInterface.dropSchema(`"${project.uuid}"`, {
+      cascade: true
+    });
     await db.Projects.destroy({ where: {} });
     await db.Users.destroy({ where: {} });
   });
 
   it("creates a schema for project in postgres", async () => {
-    const req = { params: {} } as Request;
-    req.params.id = project.id;
-    const res = {} as Response;
+    const req = { body: {} } as Request;
+    const res = { locals: { response: { data: project } } } as Response;
     const next = jest.fn();
 
-    await dropTenantSchema(req, res, next);
+    await createTenantSchema(req, res, next);
 
     const [schemas] = await db.sequelize.query(
       "SELECT schema_name FROM information_schema.schemata;"
@@ -32,6 +32,6 @@ describe("middleware/projects/dropTenantSchema", () => {
 
     const newSchema = schemas.find(({ schema_name }) => schema_name === project.uuid);
 
-    expect(newSchema).toBeFalsy();
+    expect(newSchema).toBeTruthy();
   });
 });

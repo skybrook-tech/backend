@@ -1,6 +1,6 @@
 import isString from "lodash/isString";
 import { Request, Response } from "express";
-import filterByUserId from "../../projects/filter-by-user-id";
+import filterByUserId from "../../../projects/before-get-all/filter-by-user-id";
 
 describe("middleware/projects/filterByUserId", () => {
   it("adds userId to req.body.criteria", async () => {

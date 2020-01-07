@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import db from "../../db/models";
+import db from "../../../db/models";
 
 const createTenantSchema = async (req: Request, res: Response, next: NextFunction) => {
   try {

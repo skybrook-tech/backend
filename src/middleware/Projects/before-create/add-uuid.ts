@@ -1,7 +1,7 @@
 import uuid from "uuid/v4";
 import animalAdjective from "adjective-adjective-animal";
 import { Request, Response, NextFunction } from "express";
-import db from "../../db/models";
+import db from "../../../db/models";
 
 const generateUUID = async () => {
   let UUIDExists = true;

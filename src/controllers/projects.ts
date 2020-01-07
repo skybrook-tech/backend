@@ -20,21 +20,20 @@ export default createController({
   Model: db.Projects,
   middleware: {
     create: [
-      middleware.projects.addUUID,
-      middleware.projects.addUserId,
+      middleware.projects.beforeCreate,
       ProjectsCrud.create,
-      middleware.projects.createTenantSchema
+      middleware.projects.afterCreate
     ],
     getOne: [checkAuthorization(authFuncs.getOne), ProjectsCrud.findOne],
     getAll: [
       checkAuthorization(authFuncs.getAll),
-      middleware.projects.filterByUserId,
+      middleware.projects.beforeGetAll,
       ProjectsCrud.findAll
     ],
     update: [checkAuthorization(authFuncs.update), ProjectsCrud.update],
     destroy: [
       checkAuthorization(authFuncs.destroy),
-      middleware.projects.dropTenantSchema,
+      middleware.projects.beforeDestroy,
       ProjectsCrud.destroy
     ]
   },

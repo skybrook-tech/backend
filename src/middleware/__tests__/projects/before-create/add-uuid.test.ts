@@ -1,4 +1,4 @@
-import addUUID, { generateUUID } from "../../projects/add-uuid";
+import addUUID, { generateUUID } from "../../../projects/before-create/add-uuid";
 import isString from "lodash/isString";
 import { Request, Response } from "express";
 
