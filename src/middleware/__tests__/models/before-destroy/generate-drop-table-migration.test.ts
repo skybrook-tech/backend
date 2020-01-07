@@ -1,4 +1,4 @@
-import beforeDestroy from "../../../models/before-destroy";
+import generateDropTableMigration from "../../../models/before-destroy/generate-drop-table-migration";
 import { Request, Response } from "express";
 import createProject from "../../../../factories/project";
 import createModel from "../../../../factories/model";
@@ -39,7 +39,7 @@ describe("middleware/projects/beforeDestroy", () => {
 
     const next = jest.fn();
 
-    await beforeDestroy(req, res, next);
+    await generateDropTableMigration(req, res, next);
 
     const migrations = await db.Migrations.findAll();
 

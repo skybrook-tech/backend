@@ -33,7 +33,9 @@ describe("middleware/models/before-update/handleTableName", () => {
       locals: { context: { currentProject: project } }
     } as Response;
 
-    await handleTableName(req, res);
+    const next = jest.fn();
+
+    await handleTableName(req, res, next);
 
     const migrationRecords = await db.Migrations.findAll({ where: { projectId: project.id } });
 

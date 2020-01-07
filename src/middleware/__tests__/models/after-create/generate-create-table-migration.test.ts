@@ -1,11 +1,11 @@
-import afterCreate from "../../../models/after-create";
+import generateCreateTableMigration from "../../../models/after-create/generate-create-table-migration";
 import { Request, Response } from "express";
 import createProject from "../../../../factories/project";
 import createModel from "../../../../factories/model";
 import db from "../../../../db/models";
 import migrationTypes from "../../../../constants/migration-types";
 
-describe("middleware/projects/afterCreate", () => {
+describe("middleware/projects/adter-create/generateCreateTableMigration", () => {
   let project: any;
   let model: any;
 
@@ -36,7 +36,7 @@ describe("middleware/projects/afterCreate", () => {
     } as Response;
     const next = jest.fn();
 
-    await afterCreate(req, res, next);
+    await generateCreateTableMigration(req, res, next);
 
     const migrations = await db.Migrations.findAll();
 

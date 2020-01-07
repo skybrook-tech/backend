@@ -56,7 +56,9 @@ describe("middleware/models/before-update/handleColumns", () => {
       locals: { context: { currentProject: project } }
     } as Response;
 
-    await handleColumns(req, res);
+    const next = jest.fn();
+
+    await handleColumns(req, res, next);
 
     const migrationRecords = await db.Migrations.findAll({ where: { projectId: project.id } });
     const updatedCol1 = await db.Columns.findOne({ where: { id: col1.id } });
