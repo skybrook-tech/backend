@@ -52,7 +52,9 @@ describe("middleware/projects/migrate/runMigrations", () => {
   });
 
   it("runs all migrations that haven't been run yet", async () => {
-    const res = { locals: { context: { currentProject: project } } } as Response;
+    const res = {
+      locals: { context: { currentProject: project }, response: { data: null } }
+    } as Response;
 
     await runMigrations(res);
 

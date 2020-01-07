@@ -8,6 +8,16 @@ interface Config {
   routes?: any;
 }
 
+interface Locals {
+  context: any;
+  response: { data: any };
+}
+
+const locals = {
+  context: {},
+  response: { data: null }
+} as Locals;
+
 const setupServerDefaults = (config: Config = {}) => {
   const { routes } = config;
 
@@ -16,7 +26,7 @@ const setupServerDefaults = (config: Config = {}) => {
   dotenv.config();
 
   app.use((req, res, next) => {
-    res.locals.context = {};
+    res.locals = locals;
     next();
   });
 
