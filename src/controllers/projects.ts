@@ -12,8 +12,9 @@ const authFuncs = {
   getOne: [auth.isProjectOwner],
   getAll: [],
   update: [auth.isProjectOwner],
-  destroy: [auth.isProjectOwner]
-} as { getOne: any[]; getAll: any[]; update: any[]; destroy: any[] };
+  destroy: [auth.isProjectOwner],
+  migrate: [auth.isProjectOwner]
+} as { getOne: any[]; getAll: any[]; update: any[]; destroy: any[]; migrate: any[] };
 
 export default createController({
   Model: db.Projects,
@@ -37,5 +38,12 @@ export default createController({
       ProjectsCrud.destroy
     ]
   },
+  customRoutes: [
+    {
+      method: "post",
+      endpoint: "/:id/migrate",
+      middleware: [checkAuthorization(authFuncs.migrate), middleware.projects.migrate]
+    }
+  ],
   nestedControllers: [Models]
 });
