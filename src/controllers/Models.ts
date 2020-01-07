@@ -21,6 +21,7 @@ export default createController({
   middleware: {
     create: [
       checkAuthorization(authFuncs.create),
+      middleware.models.beforeCreate,
       ModelsCrud.create,
       middleware.models.afterCreate
     ],
