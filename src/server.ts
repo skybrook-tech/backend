@@ -10,7 +10,6 @@ const PORT = process.env.NODE_ENV === "test" ? 3071 : _config.PORT;
 const DOMAIN = _config.DOMAIN;
 
 app.listen(PORT, () => {
-  // tslint:disable-next-line:no-console
   console.log(`Server ready at http://${DOMAIN}:${PORT}`);
 });
 
