@@ -16,7 +16,9 @@
     "migrate-db": "node_modules/.bin/sequelize db:migrate",
     "prod-logs": "heroku logs --tail",
     "g": "./scripts/generations.sh",
-    "cov-report": "open ./coverage/lcov-report/index.html"
+    "cov-report": "open ./coverage/lcov-report/index.html",
+    "db-init": "yarn sql db:create && NODE_ENV=test yarn sql db:create",
+    "service-init": "yarn submodule-init && yarn db-init"
   },
   "keywords": [
     "mock",
