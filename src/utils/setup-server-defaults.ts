@@ -15,7 +15,8 @@ interface Locals {
 
 const locals = {
   context: {},
-  response: { data: null }
+  response: { data: null },
+  parent: {}
 } as Locals;
 
 const setupServerDefaults = (config: Config = {}) => {
@@ -26,7 +27,8 @@ const setupServerDefaults = (config: Config = {}) => {
   dotenv.config();
 
   app.use((req, res, next) => {
-    res.locals = locals;
+    res.locals = { ...locals };
+
     next();
   });
 
@@ -35,6 +37,14 @@ const setupServerDefaults = (config: Config = {}) => {
 
   app.use(cors());
   app.use(middleware.authentication.initializePassport);
+  app.use((req, res, next) => {
+    console.log("PROJECTS");
+    next();
+  });
+  app.post("/", (req, res, next) => {
+    console.log("PROJECTS");
+    res.send();
+  });
 
   app.use(routes);
 
