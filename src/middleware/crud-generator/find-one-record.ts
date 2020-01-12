@@ -1,3 +1,5 @@
+import isInteger from "lodash/isInteger";
+
 const findOneRecord = ({
   Model,
   locals = {},
@@ -15,7 +17,13 @@ const findOneRecord = ({
 
   const { criteria = { ...parentId } } = body;
 
-  return Model.findOne({ where: { id, ...criteria }, ...sequelizeParams });
+  if (isInteger(parseInt(id, 10))) {
+    criteria.id = id;
+  } else {
+    criteria.uuid = id;
+  }
+
+  return Model.findOne({ where: { ...criteria }, ...sequelizeParams });
 };
 
 export default findOneRecord;

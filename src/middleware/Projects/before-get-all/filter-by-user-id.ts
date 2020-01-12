@@ -1,9 +1,15 @@
 import { Request, Response, NextFunction } from "express";
+import get from "lodash/get";
 
 const filterByUserId = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { criteria = {} } = req.body;
-    req.body.criteria = { ...criteria, userId: res.locals.currentUser.id };
+
+    const userId = get(res, "locals.currentUser.id");
+
+    if (userId) {
+      req.body.criteria = { ...criteria, userId };
+    }
 
     next();
   } catch (error) {
