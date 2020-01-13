@@ -1,12 +1,12 @@
 "use strict";
-import createController from "../utils/create-controller";
+import createController from "../core/utils/create-controller";
 import middleware from "../middleware";
 import db from "../db/models";
 import Models from "./models";
 import auth from "../middleware/authorization";
 import checkAuthorization from "../middleware/authorization/check-authorization";
 
-const ProjectsCrud = middleware.createCrudMiddleware(db.Projects);
+const ProjectsCrud = middleware.core.createCrudMiddleware(db.Projects);
 
 const authFuncs = {
   getOne: [auth.isProjectOwner],

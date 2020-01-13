@@ -24,17 +24,17 @@ const authExampleTwo = (req: Request, res: Response) => {
 
 const testCases = [
   {
-    description: `checkAuthentication --- when all authFunctions return true`,
+    description: `checkAuthorization --- when all authFunctions return true`,
     expected: undefined,
     should: "calls next without arguments and lets post request through",
-    req: { body: { criteriaOne: 1, criteriaTwo: 2 } },
+    req: { body: { criteriaOne: 1, criteriaTwo: 2 }, headers: { "internal-auth": null } },
     res: { locals: { criteriaOneMirror: 1, criteriaTwoMirror: 2 } }
   },
   {
-    description: `checkAuthentication --- when one or more auth functions return false`,
+    description: `checkAuthorization --- when one or more auth functions return false`,
     expected: errors.authorization.NOT_AUTHORIZED,
     should: "calls next without an error and passes to error-handler",
-    req: { body: { criteriaOne: 1, criteriaTwo: 2 } },
+    req: { body: { criteriaOne: 1, criteriaTwo: 2 }, headers: { "internal-auth": null } },
     res: { locals: { criteriaOneMirror: 1, criteriaTwoMirror: 1 } }
   }
 ] as TestCase[];

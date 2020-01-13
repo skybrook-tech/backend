@@ -4,7 +4,6 @@ import createProject from "../../../../factories/project";
 import createModel from "../../../../factories/model";
 import createColumn from "../../../../factories/column";
 import db from "../../../../db/models";
-import { createMigrationSwitch } from "../../../models/before-update/get-changed-cols-and-migrations";
 import migrationTemplates from "../../../models/migration-templates";
 
 describe("middleware/projects/migrate/runMigrations", () => {

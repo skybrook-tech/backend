@@ -4,7 +4,7 @@ import errors from "../../errors";
 import { ErrorResponse } from "../../errors/types";
 import db from "../../db/models";
 import controllers from "../index";
-import setupServerDefaults from "../../utils/setup-server-defaults";
+import setupServerDefaults from "../../core/utils/setup-server-defaults";
 
 const router = express.Router();
 const app = setupServerDefaults({ routes: router.use("/users", controllers.users) });

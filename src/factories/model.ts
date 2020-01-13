@@ -1,4 +1,4 @@
-import createRecord from "../middleware/crud-generator/create-record";
+import createRecord from "../core/middleware/crud-generator/create-record";
 import db from "../db/models";
 import faker from "faker";
 import createProject from "./project";

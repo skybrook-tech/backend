@@ -3,7 +3,7 @@ import request from "supertest";
 import errors from "../../errors";
 import db from "../../db/models";
 import controllers from "../../controllers/index";
-import setupServerDefaults from "../../utils/setup-server-defaults";
+import setupServerDefaults from "../../core/utils/setup-server-defaults";
 import middleware from "../index";
 
 const router = express.Router();

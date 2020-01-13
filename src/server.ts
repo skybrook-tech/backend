@@ -1,7 +1,6 @@
-import lodash from "lodash";
 import _config from "../_config";
 import routes from "./routes";
-import setupServerDefaults from "./utils/setup-server-defaults";
+import setupServerDefaults from "./core/utils/setup-server-defaults";
 
 const app = setupServerDefaults({ routes });
 
