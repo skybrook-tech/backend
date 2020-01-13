@@ -1,6 +1,6 @@
 import express from "express";
 import middleware from "../middleware";
-import defaultResponse from "../middleware/defaults/response";
+import defaultResponse from "../core/middleware/defaults/response";
 
 const router = express.Router();
 

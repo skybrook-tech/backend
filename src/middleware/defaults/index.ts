@@ -1,5 +1,3 @@
-import response from "./response";
-
-const defaults = { response };
+const defaults = {};
 
 export default defaults;

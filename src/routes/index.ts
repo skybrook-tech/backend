@@ -8,6 +8,10 @@ const router = express.Router({ mergeParams: true });
 router.use("/users", controllers.users);
 
 // private
-router.use("/projects", middleware.authentication.requireJwt, controllers.projects.router);
+router.use(
+  "/projects",
+  middleware.core.defaults.authentication.requireJwt,
+  controllers.projects.router
+);
 
 export default router;

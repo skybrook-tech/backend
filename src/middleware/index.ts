@@ -1,5 +1,4 @@
 import authentication from "./authentication";
-import defaults from "./defaults/response";
 import users from "./users";
 import projects from "./projects";
 import models from "./models";
@@ -16,7 +15,6 @@ interface MiddlewareObject {
 
 const middleware = {
   authentication,
-  defaults,
   projects,
   users,
   models,
