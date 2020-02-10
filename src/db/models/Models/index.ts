@@ -48,7 +48,7 @@ module.exports = (sequelize: Sequelize) => {
   };
 
   Models.getIncluded = db => {
-    return [{ model: db.Columns, as: "columns" }];
+    return [{ model: db.Columns, as: "columns", attributes: ["id"] }];
   };
 
   return Models;

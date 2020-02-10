@@ -27,7 +27,10 @@ module.exports = (sequelize: Sequelize) => {
       }
     },
     {}
-  ) as ProjectsModelStatic & { associate: (db: Db) => void };
+  ) as ProjectsModelStatic & {
+    associate: (db: Db) => void;
+    getIncluded: (db: Db) => void;
+  };
 
   Projects.associate = db => {
     Projects.belongsTo(db.Users, {
@@ -52,5 +55,8 @@ module.exports = (sequelize: Sequelize) => {
     });
   };
 
+  Projects.getIncluded = db => {
+    return [{ model: db.Models, as: "models", attributes: ["id"] }];
+  };
   return Projects;
 };
